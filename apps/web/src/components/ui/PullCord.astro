@@ -1,194 +1,395 @@
 ---
 interface Props {
   className?: string;
-  noEntrance?: boolean;
 }
 
-const { className = "", noEntrance = false } = Astro.props;
+const { className = "" } = Astro.props;
 ---
 
 <div
-  class:list={["pullcord", className]}
-  id="pullcord-wrapper"
-  data-no-entrance={noEntrance ? "true" : "false"}
+  class:list={["pc2-container", className]}
+  id="pc2-container"
   aria-hidden="false"
 >
-  <div class="pullcord-inner pullcord-inner--drop" id="pullcord-inner">
-    <svg
-      viewBox="0 0 64 340"
-      width="64"
-      height="340"
-      aria-hidden="true"
-      style="overflow: visible;"
-    >
-      <defs>
-        <linearGradient id="pc-knob-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="var(--base-white, #ffffff)"></stop>
-          <stop offset="100%" stop-color="var(--background-tertiary, #ebe9e6)"></stop>
-        </linearGradient>
-        <filter id="pc-knob-shadow" x="-70%" y="-70%" width="240%" height="240%">
-          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.3)"></feDropShadow>
-        </filter>
-      </defs>
+  <div class="pc2" id="pc2-root" style="--pc2-k: 0.85;">
+    <div class="pc2-anchor pc2-rig">
+      <svg class="pc2-cord" viewBox="-240 0 480 430" width="480" height="430" aria-hidden="true">
+        <defs>
+          <linearGradient id="pc2-cord-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="230">
+            <stop offset="0%" stop-color="#18e299" stop-opacity="0.15"></stop>
+            <stop offset="100%" stop-color="#18e299" stop-opacity="0.85"></stop>
+          </linearGradient>
+        </defs>
+        <path id="pc2-cord-path" d="M 0.0 0.0 L 0.0 230.0" class="pc2-cord-line"></path>
+        <path id="pc2-cord-lit-path" d="M 0.0 0.0 L 0.0 230.0" class="pc2-cord-lit pc2-lamp" stroke="url(#pc2-cord-grad)"></path>
+      </svg>
 
-      <path
-        id="pullcord-path"
-        stroke="var(--foreground-tertiary, rgba(127, 127, 127, 0.45))"
-        stroke-width="1.75"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        fill="none"
-        vector-effect="non-scaling-stroke"
-      ></path>
+      <div
+        id="pc2-plush"
+        class="pc2-plush"
+        style="width: 144.6px; height: 149.505px; transform-origin: 68.7px 1.2px; transform: translate(-68.7px, 228.8px) rotate(0deg) scale(1, 1);"
+      >
+        <!-- BASE COLOR LAYER (Green brand theme matching user's reference) -->
+        <div class="pc2-layer pc2-base">
+          <!-- Ear Right -->
+          <svg class="pc2-part pc2-ear" data-ear="R" viewBox="0 0 482 498.35" width="144.6" height="149.505" aria-hidden="true" style="transform-origin: 97.2px 18px; transform: skewX(0deg);">
+            <defs>
+              <radialGradient id="pc2-inner-r" cx="241" cy="300" r="270" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#b6f58e" stop-opacity="0.9"></stop>
+                <stop offset="55%" stop-color="#88c784" stop-opacity="0.6"></stop>
+                <stop offset="100%" stop-color="#4e8c56" stop-opacity="0.5"></stop>
+              </radialGradient>
+              <mask id="pc2-cut-r" maskUnits="userSpaceOnUse" x="-100" y="-100" width="700" height="700">
+                <path fill-rule="evenodd" fill="#fff" d="M318 52 L520 62 L520 300 L432 300 L404 272 L396 250 L370 238 L346 214 L334 180 L332 146 L324 118 L312 84 Z"></path>
+              </mask>
+            </defs>
+            <g mask="url(#pc2-cut-r)">
+              <path d="M321.93 53.91C321.93 53.91 359.65 72.88 402.2 98.85C444.74 124.81 472.97 147.3 480.23 174.16C487.5 201.03 474.32 257.21 403.53 232.46C403.53 232.46 400.13 245.71 405.99 270.51C411.85 295.32 419.89 340.29 412.72 376.25C405.55 412.21 392.81 430.75 383.39 448.24C373.97 465.73 379.15 485.93 364.07 493.23C348.99 500.54 317.4 503.73 308.44 466.81C308.44 466.81 263.72 468.71 236.6 468.25C209.49 467.8 175.39 467.72 175.39 467.72C175.39 467.72 167.68 497.23 141.87 498.31C116.06 499.38 103.19 480.37 102.38 449C102.38 449 67.11 402.39 67.03 350.52C66.95 298.65 82.9 253.57 82.9 253.57L79.23 232.51C79.23 232.51 56.52 247.11 30.1 236.47C3.69 225.82 -10.34 194.51 9.01 159.52C28.36 124.53 51.84 115.42 85.01 95.78C118.17 76.15 150.86 55.3 150.86 55.3C150.86 55.3 142.11 32 212.16 17.3C212.16 17.3 210.55 1.73 227.25 0.1C243.95 -1.53 246.58 17.43 246.58 17.43C246.58 17.43 315.94 16.23 321.93 53.91Z" fill="#1b241e"></path>
+              <path d="M252.31 77.07C275.4 76.56 311.77 62.61 312.06 52.78C312.35 42.94 290.12 30.35 266.98 28.08C243.83 25.8 239.65 25.01 238.68 19.74C237.7 14.47 236.43 12.33 232.79 9.67C229.14 7.02 222.42 9.93 221.77 16.71C221.13 23.48 220.5 25.04 213.21 26.18C205.92 27.31 160.2 38.76 160.57 54.59C160.94 70.42 229.21 77.57 252.31 77.07Z" fill="#2d3b31"></path>
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="#88c784"></path>
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="url(#pc2-inner-r)"></path>
+              <path class="pc2-eye" d="M166.79 145.53C176.11 144.21 177.35 158.47 168.28 159.54C159.21 160.61 157.48 146.84 166.79 145.53Z" fill="#1b241e"></path>
+              <path class="pc2-eye" d="M311.33 145.53C320.64 144.21 321.88 158.47 312.81 159.54C303.74 160.61 302.01 146.84 311.33 145.53Z" fill="#1b241e"></path>
+              <!-- Nose & Mouth -->
+              <path d="M244.79 175.35C244.79 175.35 255.44 171.47 255.01 165.68C254.59 159.89 247.73 161.53 241.63 160.81C235.52 160.1 227.33 162.19 228.67 166.69C230 171.19 237.81 174.58 237.81 174.58C237.81 174.58 236.74 190.57 227.44 193.94C218.14 197.3 210.95 193.51 212.28 187.88C213.61 182.26 218.57 181.47 216.74 178.79C214.9 176.11 207.68 180.27 205.84 186.71C204 193.16 209.18 199.64 218 201.44C226.83 203.25 236.37 198.22 240.19 190.58C240.19 190.58 246.23 202.32 259.33 203.09C272.43 203.85 275.71 193.61 275.27 189.25C274.84 184.89 269.5 179.33 265.44 179.03C261.37 178.72 260.24 183.06 263.25 184.79C266.25 186.52 271.81 192.36 263.53 197.12C255.25 201.87 239.72 183.8 244.79 175.35Z" fill="#1b241e"></path>
+              <!-- Heart held in hands -->
+              <path d="M237.17 241.03C237.17 241.03 261.1 215.24 288.44 217.91C315.78 220.58 335.8 243.19 330.54 270.83C330.54 270.83 337.74 267.61 339.94 270.61C342.14 273.61 329.64 286.68 313.73 289.89C297.82 293.1 280.76 291.62 279.78 306.21C278.81 320.8 301.32 328.5 318.93 326.31C336.53 324.12 350.62 312.2 353.74 317.4C356.86 322.6 346.6 328.2 335.11 332.23C323.62 336.26 302.6 338.86 287.83 331.68C287.83 331.68 245.87 370.36 234.97 367.76C224.07 365.17 194.57 344.44 185.73 336.63C185.73 336.63 163.91 338.19 151.33 334.24C138.75 330.3 123.28 322.79 126.03 318.21C128.79 313.63 136.62 318.06 150.41 323.98C164.2 329.9 189.4 329.17 197.03 316.14C204.67 303.12 196.46 294.45 181.11 291.59C165.75 288.72 150.66 284.5 144.47 280.05C138.27 275.59 140.47 270.61 146.37 271.47C146.37 271.47 147.09 241.67 164.85 229.4C182.62 217.13 209.82 216.09 237.17 241.03Z" fill="#1b241e"></path>
+              <path d="M195.41 331.53C195.41 331.53 230.52 359.91 236.61 357.74C242.7 355.56 272.18 334.93 279.03 326.52C279.03 326.52 268.32 314.61 271.09 302.5C273.87 290.39 283.84 283.87 298.87 282.24C313.9 280.61 317.69 277.22 320.95 268.91C324.21 260.59 316.96 237.64 300.97 230.82C284.98 224 264.83 230.35 252.91 240.99C240.99 251.64 237.54 255.86 233.59 252.12C229.63 248.39 214.89 229.18 191.71 229.55C168.53 229.92 150.88 254.84 158.56 276.85C158.56 276.85 170.04 281.33 184.02 282.87C197.99 284.43 211.57 294.56 209.73 309.06C207.88 323.56 195.41 331.53 195.41 331.53Z" fill="#2d6e44"></path>
+            </g>
+          </svg>
 
-      <g id="pullcord-knob-group">
-        <g filter="url(#pc-knob-shadow)">
-          <circle
-            cx="32"
-            cy="176"
-            r="7"
-            fill="url(#pc-knob-grad)"
-            stroke="var(--border-tertiary, rgba(0,0,0,0.15))"
-            stroke-width="0.75"
-          ></circle>
-          <circle
-            cx="32"
-            cy="176"
-            r="2"
-            fill="var(--brand-base, #0c8c5e)"
-          ></circle>
-        </g>
-      </g>
-    </svg>
+          <!-- Ear Left -->
+          <svg class="pc2-part pc2-ear" data-ear="L" viewBox="0 0 482 498.35" width="144.6" height="149.505" aria-hidden="true" style="transform-origin: 47.4px 18px; transform: skewX(0deg);">
+            <defs>
+              <mask id="pc2-cut-l" maskUnits="userSpaceOnUse" x="-100" y="-100" width="700" height="700">
+                <path fill-rule="evenodd" fill="#fff" d="M164 52 L-38 62 L-38 300 L50 300 L78 272 L86 250 L112 238 L136 214 L148 180 L150 146 L158 118 L170 84 Z"></path>
+              </mask>
+            </defs>
+            <g mask="url(#pc2-cut-l)">
+              <path d="M321.93 53.91C321.93 53.91 359.65 72.88 402.2 98.85C444.74 124.81 472.97 147.3 480.23 174.16C487.5 201.03 474.32 257.21 403.53 232.46C403.53 232.46 400.13 245.71 405.99 270.51C411.85 295.32 419.89 340.29 412.72 376.25C405.55 412.21 392.81 430.75 383.39 448.24C373.97 465.73 379.15 485.93 364.07 493.23C348.99 500.54 317.4 503.73 308.44 466.81C308.44 466.81 263.72 468.71 236.6 468.25C209.49 467.8 175.39 467.72 175.39 467.72C175.39 467.72 167.68 497.23 141.87 498.31C116.06 499.38 103.19 480.37 102.38 449C102.38 449 67.11 402.39 67.03 350.52C66.95 298.65 82.9 253.57 82.9 253.57L79.23 232.51C79.23 232.51 56.52 247.11 30.1 236.47C3.69 225.82 -10.34 194.51 9.01 159.52C28.36 124.53 51.84 115.42 85.01 95.78C118.17 76.15 150.86 55.3 150.86 55.3C150.86 55.3 142.11 32 212.16 17.3C212.16 17.3 210.55 1.73 227.25 0.1C243.95 -1.53 246.58 17.43 246.58 17.43C246.58 17.43 315.94 16.23 321.93 53.91Z" fill="#1b241e"></path>
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="#88c784"></path>
+            </g>
+          </svg>
 
-    <button
-      id="pullcord-knob-btn"
-      type="button"
-      class="pullcord-knob"
-      aria-label="Pull cord to toggle theme"
-      title="Pull cord to toggle light / dark theme"
-      tabindex="0"
-    ></button>
+          <!-- Body & Head -->
+          <svg class="pc2-part" viewBox="0 0 482 498.35" width="144.6" height="149.505" aria-hidden="true">
+            <defs>
+              <mask id="pc2-cut-b" maskUnits="userSpaceOnUse" x="-100" y="-100" width="700" height="700">
+                <path fill-rule="evenodd" fill="#fff" d="M-100 -100 H600 V600 H-100 Z M322 57 L520 70 L520 266 L432 266 L414 252 L408 236 L393 224 L388 206 L378 176 L358 134 L350 112 Z M160 57 L-38 70 L-38 266 L50 266 L68 252 L74 236 L89 224 L94 206 L104 176 L124 134 L132 112 Z"></path>
+              </mask>
+            </defs>
+            <g mask="url(#pc2-cut-b)">
+              <path d="M321.93 53.91C321.93 53.91 359.65 72.88 402.2 98.85C444.74 124.81 472.97 147.3 480.23 174.16C487.5 201.03 474.32 257.21 403.53 232.46C403.53 232.46 400.13 245.71 405.99 270.51C411.85 295.32 419.89 340.29 412.72 376.25C405.55 412.21 392.81 430.75 383.39 448.24C373.97 465.73 379.15 485.93 364.07 493.23C348.99 500.54 317.4 503.73 308.44 466.81C308.44 466.81 263.72 468.71 236.6 468.25C209.49 467.8 175.39 467.72 175.39 467.72C175.39 467.72 167.68 497.23 141.87 498.31C116.06 499.38 103.19 480.37 102.38 449C102.38 449 67.11 402.39 67.03 350.52C66.95 298.65 82.9 253.57 82.9 253.57L79.23 232.51C79.23 232.51 56.52 247.11 30.1 236.47C3.69 225.82 -10.34 194.51 9.01 159.52C28.36 124.53 51.84 115.42 85.01 95.78C118.17 76.15 150.86 55.3 150.86 55.3C150.86 55.3 142.11 32 212.16 17.3C212.16 17.3 210.55 1.73 227.25 0.1C243.95 -1.53 246.58 17.43 246.58 17.43C246.58 17.43 315.94 16.23 321.93 53.91Z" fill="#1b241e"></path>
+              <path d="M252.31 77.07C275.4 76.56 311.77 62.61 312.06 52.78C312.35 42.94 290.12 30.35 266.98 28.08C243.83 25.8 239.65 25.01 238.68 19.74C237.7 14.47 236.43 12.33 232.79 9.67C229.14 7.02 222.42 9.93 221.77 16.71C221.13 23.48 220.5 25.04 213.21 26.18C205.92 27.31 160.2 38.76 160.57 54.59C160.94 70.42 229.21 77.57 252.31 77.07Z" fill="#2d3b31"></path>
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="#88c784"></path>
+              <path class="pc2-eye" d="M166.79 145.53C176.11 144.21 177.35 158.47 168.28 159.54C159.21 160.61 157.48 146.84 166.79 145.53Z" fill="#1b241e"></path>
+              <path class="pc2-eye" d="M311.33 145.53C320.64 144.21 321.88 158.47 312.81 159.54C303.74 160.61 302.01 146.84 311.33 145.53Z" fill="#1b241e"></path>
+              <path d="M244.79 175.35C244.79 175.35 255.44 171.47 255.01 165.68C254.59 159.89 247.73 161.53 241.63 160.81C235.52 160.1 227.33 162.19 228.67 166.69C230 171.19 237.81 174.58 237.81 174.58C237.81 174.58 236.74 190.57 227.44 193.94C218.14 197.3 210.95 193.51 212.28 187.88C213.61 182.26 218.57 181.47 216.74 178.79C214.9 176.11 207.68 180.27 205.84 186.71C204 193.16 209.18 199.64 218 201.44C226.83 203.25 236.37 198.22 240.19 190.58C240.19 190.58 246.23 202.32 259.33 203.09C272.43 203.85 275.71 193.61 275.27 189.25C274.84 184.89 269.5 179.33 265.44 179.03C261.37 178.72 260.24 183.06 263.25 184.79C266.25 186.52 271.81 192.36 263.53 197.12C255.25 201.87 239.72 183.8 244.79 175.35Z" fill="#1b241e"></path>
+              <path d="M237.17 241.03C237.17 241.03 261.1 215.24 288.44 217.91C315.78 220.58 335.8 243.19 330.54 270.83C330.54 270.83 337.74 267.61 339.94 270.61C342.14 273.61 329.64 286.68 313.73 289.89C297.82 293.1 280.76 291.62 279.78 306.21C278.81 320.8 301.32 328.5 318.93 326.31C336.53 324.12 350.62 312.2 353.74 317.4C356.86 322.6 346.6 328.2 335.11 332.23C323.62 336.26 302.6 338.86 287.83 331.68C287.83 331.68 245.87 370.36 234.97 367.76C224.07 365.17 194.57 344.44 185.73 336.63C185.73 336.63 163.91 338.19 151.33 334.24C138.75 330.3 123.28 322.79 126.03 318.21C128.79 313.63 136.62 318.06 150.41 323.98C164.2 329.9 189.4 329.17 197.03 316.14C204.67 303.12 196.46 294.45 181.11 291.59C165.75 288.72 150.66 284.5 144.47 280.05C138.27 275.59 140.47 270.61 146.37 271.47C146.37 271.47 147.09 241.67 164.85 229.4C182.62 217.13 209.82 216.09 237.17 241.03Z" fill="#1b241e"></path>
+              <path d="M195.41 331.53C195.41 331.53 230.52 359.91 236.61 357.74C242.7 355.56 272.18 334.93 279.03 326.52C279.03 326.52 268.32 314.61 271.09 302.5C273.87 290.39 283.84 283.87 298.87 282.24C313.9 280.61 317.69 277.22 320.95 268.91C324.21 260.59 316.96 237.64 300.97 230.82C284.98 224 264.83 230.35 252.91 240.99C240.99 251.64 237.54 255.86 233.59 252.12C229.63 248.39 214.89 229.18 191.71 229.55C168.53 229.92 150.88 254.84 158.56 276.85C158.56 276.85 170.04 281.33 184.02 282.87C197.99 284.43 211.57 294.56 209.73 309.06C207.88 323.56 195.41 331.53 195.41 331.53Z" fill="#2d6e44"></path>
+            </g>
+          </svg>
+        </div>
+
+        <!-- PHOSPHORESCENT GLOW LAYER (Luminescent in dark mode) -->
+        <div class="pc2-layer pc2-phos">
+          <svg class="pc2-part pc2-ear" data-ear="R" viewBox="0 0 482 498.35" width="144.6" height="149.505" aria-hidden="true" style="transform-origin: 97.2px 18px; transform: skewX(0deg);">
+            <defs>
+              <radialGradient id="pc2-glow-grad" cx="241" cy="290" r="260" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c9f79a"></stop>
+                <stop offset="60%" stop-color="#18e299"></stop>
+                <stop offset="100%" stop-color="#0c8c5e"></stop>
+              </radialGradient>
+            </defs>
+            <g mask="url(#pc2-cut-r)">
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="url(#pc2-glow-grad)"></path>
+            </g>
+          </svg>
+          <svg class="pc2-part pc2-ear" data-ear="L" viewBox="0 0 482 498.35" width="144.6" height="149.505" aria-hidden="true" style="transform-origin: 47.4px 18px; transform: skewX(0deg);">
+            <g mask="url(#pc2-cut-l)">
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="url(#pc2-glow-grad)"></path>
+            </g>
+          </svg>
+          <svg class="pc2-part" viewBox="0 0 482 498.35" width="144.6" height="149.505" aria-hidden="true">
+            <g mask="url(#pc2-cut-b)">
+              <path d="M153.88 64.73C153.88 64.73 159.3 78.03 206.34 83.8C253.39 89.57 308.88 83.77 318.4 62.6C318.4 62.6 360.23 83.44 401.79 110.14C443.35 136.85 477.44 162.98 471.93 195.28C466.42 227.59 438.01 232.52 421.62 228.87C405.23 225.21 404.15 219.7 402.71 206.87C401.26 194.03 387.03 153.5 375.65 142.34C364.27 131.17 361.12 140.09 367.11 146.75C373.11 153.4 392.7 190.68 394.35 219.08C395.99 247.48 388.51 246.15 395.03 269.32C401.55 292.48 408.92 341.16 403.21 378.16C397.51 415.16 372.38 441.64 370.3 455.62C368.22 469.6 364.85 486.06 351.74 487.07C338.63 488.08 322.15 485.3 319.08 470.36C316 455.42 313.44 454.57 308.81 458.62C308.81 458.62 261.13 458.65 224.15 458.96C187.16 459.28 175.04 458.88 175.04 458.88C175.04 458.88 174.02 455.38 169.88 455.52C165.75 455.66 167.33 468.13 159.06 480.79C150.8 493.44 126.94 491.69 120.5 479.81C114.07 467.94 112.13 459.42 111.25 452.15C110.37 444.88 108.55 444.92 103.88 437.44C99.2 429.96 80.94 397.73 77.68 358.95C74.42 320.17 81.57 294.05 86.67 275.5C91.77 256.94 91.06 253.14 88.52 237.65C85.98 222.16 88.99 195.68 99.59 173.76C110.18 151.84 120.75 143.12 118.92 138.92C117.1 134.72 109.63 139.44 100.09 154.27C90.55 169.1 79.24 202.12 79.45 219.97C79.45 219.97 57.01 237.45 33.69 226.83C10.38 216.2 -3.3 177.74 33.17 143.1C69.64 108.47 106.31 98.97 153.88 64.73Z" fill="url(#pc2-glow-grad)"></path>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Attachment Knot -->
+        <span class="pc2-knot" style="left: 68.7px; top: 1.2px;"></span>
+      </div>
+
+      <!-- Playful "pull me" hint -->
+      <div id="pc2-hint" class="pc2-hint" aria-hidden="true" style="top: 258px;">
+        <span class="pc2-hint-text">pull me</span>
+        <svg class="pc2-hint-arrow" viewBox="16 11 59 68" width="36" height="42">
+          <path d="M63.9304352,16.6935883c-0.7543335-0.2961426-1.5021973-0.5897217-2.2429199-0.8804922c-0.4156494-0.151001-0.8272705-0.3005371-1.2348022-0.4485474c-0.8189087-0.2849731-1.6208496-0.5641479-2.4039307-0.8366699c-3.142334-1.060791-6.0206909-1.8996582-8.4889526-2.4821777c-4.9364014-1.164978-8.2321777-1.3042603-8.7171021-0.1418457c-0.4849243,1.1624756,1.9327393,3.4066162,6.2335815,6.0951529c1.8245239,1.140564,4.0041504,2.3630371,6.4287109,3.6149292c-3.9299927,0.5129395-8.5645752,1.7341919-13.3596802,4.0892334c-2.4478149,1.2183838-4.8989258,2.7646484-7.2866211,4.5922241c-2.3288574,1.8961792-4.618042,4.0429077-6.6160278,6.5328979c-4.0496826,4.9500122-6.6275635,10.5092773-8.1968384,15.6245728c-1.5393066,5.1433716-2.2120972,9.887085-2.272583,13.8354492c-0.1154785,1.9729614,0.012085,3.7541504,0.1219482,5.3097534c0.0647583,0.777832,0.1106567,1.4995117,0.2159424,2.1618042c0.1115112,0.6623535,0.2285767,1.265686,0.350769,1.8070068c0.4889526,2.1658325,1.0587769,3.3349609,1.6884766,3.3342896c0.6296387-0.0006104,1.2607422-1.1640625,1.8604736-3.2163696c0.1498413-0.5132446,0.2977295-1.0822754,0.4429321-1.703186c0.1628418-0.6179199,0.3389282-1.2863159,0.5276489-2.0026855c0.3671875-1.4299927,0.6803589-3.0605469,1.182373-4.8129272c0.8353271-3.5391235,2.0805664-7.6299438,3.805542-11.9075317c1.7584839-4.2592163,4.09375-8.6965942,7.3496704-12.6729736c1.6064453-2.0076294,3.4013062-3.7537842,5.2017822-5.3754272c1.8607788-1.5527344,3.755249-2.9500122,5.6772461-4.1428223c3.8567505-2.3618164,7.7036743-4.0240479,11.0596924-5.2119751c0.1141968-0.0405884,0.2226563-0.0770874,0.3356323-0.1167603c-2.00354,2.4140625-3.7368164,4.677124-5.1082764,6.6715088c-2.8739014,4.1792603-4.1975708,7.2007446-3.2896729,8.0737915c0.9078369,0.8730469,3.8753052-0.5675049,7.9391479-3.602478c2.0318604-1.5174561,4.3378906-3.4335327,6.7976074-5.6582031c0.6096802-0.5618896,1.2340698-1.1373901,1.8716431-1.7250366c0.3148193-0.2980347,0.6328735-0.5991821,0.9540405-0.9032593c0.5633545-0.5615845,1.1321411-1.128479,1.7058105-1.7003784c2.5238647-2.5367432,5.1615601-5.2334595,7.8085938-7.9859619C70.7511749,19.4375458,67.2552032,18.0151825,63.9304352,16.6935883z" fill="currentColor"></path>
+        </svg>
+      </div>
+
+      <!-- Grab & Pull hit button overlay -->
+      <button
+        id="pc2-knob-btn"
+        type="button"
+        class="pc2-knob"
+        aria-label="Pull cord to toggle light or dark theme"
+        title="Pull cord to toggle light or dark theme"
+        style="left: -74.7px; top: 222px; width: 156.6px; height: 161.505px;"
+      ></button>
+    </div>
   </div>
 </div>
 
 <style>
-  .pullcord {
+  .pc2-container {
     position: fixed;
-    top: var(--pullcord-top, 0px);
-    right: var(--pullcord-right, max(1.25rem, calc((100vw - 1088px) / 2 + 1.25rem)));
-    z-index: var(--pullcord-z, 45);
-    width: 64px;
-    height: 340px;
+    top: 0;
+    right: max(1rem, calc((100vw - 1088px) / 2 + 1rem));
+    z-index: 50;
+    width: 0;
+    height: 0;
     pointer-events: none;
     user-select: none;
+    -webkit-user-select: none;
   }
 
-  .pullcord-inner {
+  .pc2 {
+    position: relative;
+    width: 0;
+    height: 0;
+  }
+
+  .pc2-anchor {
     position: absolute;
-    inset: 0;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    transform: scale(var(--pc2-k, 0.85));
+    transform-origin: 0 0;
   }
 
-  .pullcord-inner--drop {
-    animation: pullcord-drop 0.65s 0.35s cubic-bezier(0.45, 0, 0.9, 0.5) both;
+  .pc2-rig {
+    z-index: 4;
   }
 
-  @keyframes pullcord-drop {
-    0% {
-      opacity: 0;
-      transform: translateY(-240px);
+  .pc2-cord {
+    position: absolute;
+    left: -240px;
+    top: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .pc2-cord path {
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pc2-cord-line {
+    stroke: var(--foreground-secondary, #302a26);
+    transition: stroke 0.3s ease;
+  }
+
+  .pc2-cord-lit {
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+
+  :global(.dark) .pc2-cord-lit {
+    opacity: 0.85;
+  }
+
+  .pc2-plush {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
+  }
+
+  :global(.dark) .pc2-plush {
+    filter: drop-shadow(0 8px 24px rgba(24, 226, 153, 0.25)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+  }
+
+  .pc2-layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .pc2-part {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: visible;
+  }
+
+  .pc2-ear {
+    will-change: transform;
+  }
+
+  .pc2-phos {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    mix-blend-mode: screen;
+  }
+
+  :global(.dark) .pc2-phos {
+    opacity: 0.85;
+  }
+
+  .pc2-knot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: var(--brand-button-border, #04422b);
+    transition: background-color 0.45s ease;
+  }
+
+  :global(.dark) .pc2-knot {
+    background: #18e299;
+  }
+
+  .pc2-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scaleY(1);
+    transition: transform 0.3s ease;
+  }
+
+  :global(.dark) .pc2-eye {
+    transform: scaleY(0.18);
+  }
+
+  .pc2-hint {
+    position: absolute;
+    right: 76px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--brand-base, #0c8c5e);
+    white-space: nowrap;
+    pointer-events: none;
+    animation: pc2-hint-breathe 3.2s ease-in-out infinite;
+    transition: opacity 0.5s ease;
+  }
+
+  :global(.dark) .pc2-hint {
+    color: #18e299;
+    text-shadow: 0 0 10px rgba(24, 226, 153, 0.45);
+  }
+
+  @keyframes pc2-hint-breathe {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.85;
     }
-    20% {
+    50% {
+      transform: translateY(-4px) scale(1.03);
       opacity: 1;
     }
-    100% {
-      transform: translateY(0);
-    }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .pullcord-inner--drop {
-      animation: none !important;
-    }
+  .pc2-hint-text {
+    font-family: var(--font-paper, monospace);
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    font-weight: 600;
   }
 
-  .pullcord-knob {
-    -webkit-tap-highlight-color: transparent;
-    border-radius: 50%;
+  .pc2-hint-arrow {
+    flex: none;
+    transform: rotate(64deg);
+  }
+
+  .pc2.is-touched .pc2-hint {
+    opacity: 0 !important;
+    animation: none !important;
+    pointer-events: none;
+  }
+
+  .pc2-knob {
     position: absolute;
-    left: 9px; /* 32 - 46/2 = 9 */
-    top: 153px; /* 176 - 46/2 = 153 */
-    width: 46px;
-    height: 46px;
     padding: 0;
-    border: none;
+    border: 0;
+    border-radius: 44% 44% 48% 48%;
     background: transparent;
     cursor: grab;
     touch-action: none;
     pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
     outline: none;
   }
 
-  .pullcord-knob:active {
+  .pc2-knob:active {
     cursor: grabbing;
   }
 
-  .pullcord-knob:focus-visible {
-    outline: 2px solid var(--brand-base, #0c8c5e);
-    outline-offset: -9px;
+  .pc2-knob:focus-visible {
+    outline: 2px dashed var(--brand-base, #18e299);
+    outline-offset: -12px;
   }
 </style>
 
 <script>
   import { playConfirmSound } from "../../lib/sound";
 
-  function initPullCord() {
-    const wrapper = document.getElementById("pullcord-wrapper");
-    const inner = document.getElementById("pullcord-inner");
-    const cordPath = document.getElementById("pullcord-path") as SVGPathElement | null;
-    const knobGroup = document.getElementById("pullcord-knob-group") as SVGGElement | null;
-    const knobBtn = document.getElementById("pullcord-knob-btn") as HTMLButtonElement | null;
+  function initPullCordV2() {
+    const root = document.getElementById("pc2-root");
+    const cordPath = document.getElementById("pc2-cord-path") as SVGPathElement | null;
+    const cordLitPath = document.getElementById("pc2-cord-lit-path") as SVGPathElement | null;
+    const plushEl = document.getElementById("pc2-plush") as HTMLElement | null;
+    const knobBtn = document.getElementById("pc2-knob-btn") as HTMLButtonElement | null;
+    const ears = root?.querySelectorAll<SVGElement>(".pc2-ear");
 
-    if (!wrapper || !inner || !cordPath || !knobGroup || !knobBtn) return;
+    if (!root || !cordPath || !cordLitPath || !plushEl || !knobBtn) return;
 
-    // Geometry constants
-    const W = 64;
-    const ANCHOR_X = W / 2; // 32
-    const REST_Y = 176;
-    const SEGMENTS = 16;
-    const REST_SEG = REST_Y / SEGMENTS; // 11
+    // Core Constants from V2
+    const Zs = 230; // cord rest length
+    const NUM_SEGMENTS = 16;
+    const REST_SEG = Zs / NUM_SEGMENTS; // 14.375
+    const ou = 68.7; // knot anchor X
+    const g0 = 1.2;  // knot anchor Y
+    const RAD_TO_DEG = 180 / Math.PI;
 
-    // Physics configuration
-    const config = {
-      gravity: 1250,
-      damping: 0.94,
-      iterations: 20,
-      stretchMax: 28,
-      stretchToggle: 20,
-      maxVelocity: 22,
-      sleepVelocity: 0.15,
-    };
+    // Physics parameters
+    const gravity = 1200;
+    const damping = 0.94;
+    const iterations = 18;
+    const stretchMax = 65;
+    const stretchToggle = 42;
+    const maxVelocity = 28;
 
-    type RopeNode = { x: number; y: number; ox: number; oy: number; fixed: boolean };
+    type Node = { x: number; y: number; ox: number; oy: number; fixed: boolean };
 
-    function makeNodes(): RopeNode[] {
-      const arr: RopeNode[] = [];
-      for (let i = 0; i <= SEGMENTS; i++) {
+    function makeNodes(): Node[] {
+      const arr: Node[] = [];
+      for (let i = 0; i <= NUM_SEGMENTS; i++) {
         const y = REST_SEG * i;
-        arr.push({ x: ANCHOR_X, y, ox: ANCHOR_X, oy: y, fixed: i === 0 });
+        arr.push({ x: 0, y, ox: 0, oy: y, fixed: i === 0 });
       }
       return arr;
     }
 
-    function buildPath(p: RopeNode[]): string {
-      let d = `M ${p[0].x.toFixed(1)} ${p[0].y.toFixed(1)}`;
-      for (let i = 1; i < p.length - 1; i++) {
-        const xc = (p[i].x + p[i + 1].x) / 2;
-        const yc = (p[i].y + p[i + 1].y) / 2;
-        d += ` Q ${p[i].x.toFixed(1)} ${p[i].y.toFixed(1)} ${xc.toFixed(1)} ${yc.toFixed(1)}`;
+    function buildPath(pts: Node[]): string {
+      let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+      for (let i = 1; i < pts.length - 1; i++) {
+        const xc = (pts[i].x + pts[i + 1].x) / 2;
+        const yc = (pts[i].y + pts[i + 1].y) / 2;
+        d += ` Q ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)} ${xc.toFixed(1)} ${yc.toFixed(1)}`;
       }
-      const n = p.length - 1;
-      d += ` L ${p[n].x.toFixed(1)} ${p[n].y.toFixed(1)}`;
+      const last = pts.length - 1;
+      d += ` L ${pts[last].x.toFixed(1)} ${pts[last].y.toFixed(1)}`;
       return d;
     }
 
@@ -200,7 +401,19 @@ const { className = "", noEntrance = false } = Astro.props;
     let clicked = false;
     let dragStartX = 0;
     let dragStartY = 0;
-    const target = { x: ANCHOR_X, y: REST_Y };
+    const target = { x: 0, y: Zs };
+
+    // Dynamic rotation & ear spring variables
+    let rot = 0;
+    let rotVel = 0;
+    let earR = 0;
+    let earRVel = 0;
+    let earL = 0;
+    let earLVel = 0;
+    let prevVertVel = 0;
+    let vertAcc = 0;
+    let scaleY = 1;
+    let scaleVel = 0;
 
     let rafId = 0;
     let running = false;
@@ -210,21 +423,31 @@ const { className = "", noEntrance = false } = Astro.props;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function render() {
-      cordPath!.setAttribute("d", buildPath(pts));
-      const tx = (pts[last].x - ANCHOR_X).toFixed(2);
-      const ty = (pts[last].y - REST_Y).toFixed(2);
-      knobGroup!.setAttribute("transform", `translate(${tx} ${ty})`);
-      knobBtn!.style.transform = `translate(${tx}px, ${ty}px)`;
+      const d = buildPath(pts);
+      cordPath!.setAttribute("d", d);
+      cordLitPath!.setAttribute("d", d);
+
+      const p = pts[last];
+      const scaleX = 1 / Math.sqrt(Math.max(0.7, scaleY));
+      plushEl!.style.transform = `translate(${(p.x - ou).toFixed(2)}px, ${(p.y - g0).toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)})`;
+
+      if (ears) {
+        ears.forEach((ear) => {
+          const isRight = ear.dataset.ear === "R";
+          const skewVal = isRight ? -earR : -earL;
+          ear.style.transform = `skewX(${skewVal.toFixed(2)}deg)`;
+        });
+      }
     }
 
     function step(now: number) {
-      const { gravity, damping, iterations, sleepVelocity } = config;
       const dt = prevT ? Math.min(0.04, Math.max(0.004, (now - prevT) / 1000)) : 1 / 60;
       prevT = now;
       const tc = prevDt > 0 ? dt / prevDt : 1;
       const velCoef = Math.pow(damping, dt * 60) * tc;
       const accCoef = dt * dt;
 
+      // Verlet update on rope
       for (let i = 1; i <= last; i++) {
         const p = pts[i];
         if (p.fixed) continue;
@@ -236,7 +459,7 @@ const { className = "", noEntrance = false } = Astro.props;
         p.y += vy * velCoef + gravity * accCoef;
       }
 
-      pts[0].x = ANCHOR_X;
+      pts[0].x = 0;
       pts[0].y = 0;
 
       if (dragging) {
@@ -246,6 +469,7 @@ const { className = "", noEntrance = false } = Astro.props;
         pts[last].y = target.y;
       }
 
+      // Distance constraints
       for (let k = 0; k < iterations; k++) {
         for (let i = 0; i < last; i++) {
           const a = pts[i];
@@ -268,15 +492,51 @@ const { className = "", noEntrance = false } = Astro.props;
       }
 
       prevDt = dt;
+
+      // Plushie angular spring physics based on rope end inclination
+      const pLast = pts[last];
+      const pPrev = pts[Math.max(0, last - 2)];
+      const targetAngle = Math.atan2(-(pLast.x - pPrev.x), pLast.y - pPrev.y) * RAD_TO_DEG;
+      const springAcc = 140 * (targetAngle - rot) - 11 * rotVel;
+      rotVel += springAcc * dt;
+      rot += rotVel * dt;
+
+      // Vertical acceleration for ear & squash reaction
+      const currentVertVel = (pLast.y - pLast.oy) / dt;
+      const rawVertAcc = (currentVertVel - prevVertVel) / dt;
+      vertAcc += (Math.max(-25000, Math.min(25000, rawVertAcc)) - vertAcc) * 0.5;
+      prevVertVel = currentVertVel;
+
+      // Ear inertia
+      const earRForce = -70 * earR - 5.5 * earRVel - springAcc * 0.7 - vertAcc * 0.14;
+      const earLForce = -70 * earL - 5.5 * earLVel - springAcc * 0.7 + vertAcc * 0.14;
+      earRVel += earRForce * dt;
+      earLVel += earLForce * dt;
+      earR = Math.max(-6, Math.min(18, earR + earRVel * dt));
+      earL = Math.max(-18, Math.min(6, earL + earLVel * dt));
+
+      // Elastic squash-and-stretch volume preservation
+      const ropeStretch = Math.hypot(pLast.x, pLast.y) - Zs;
+      const targetSquash = dragging ? 1 + 0.07 * Math.max(0, Math.min(1, ropeStretch / stretchMax)) : 1;
+      scaleVel += (400 * (targetSquash - scaleY) - 14 * scaleVel - vertAcc * 0.0024) * dt;
+      scaleY = Math.max(0.9, Math.min(1.14, scaleY + scaleVel * dt));
+
       render();
 
-      let speed = 0;
-      for (let i = 1; i < pts.length; i++) {
-        speed += Math.abs(pts[i].x - pts[i].ox) + Math.abs(pts[i].y - pts[i].oy);
+      // Check resting threshold
+      let totalMotion = 0;
+      for (let i = 1; i <= last; i++) {
+        totalMotion += Math.abs(pts[i].x - pts[i].ox) + Math.abs(pts[i].y - pts[i].oy);
       }
 
-      if (!dragging && speed < sleepVelocity * dt * 60) {
-        render();
+      const isResting =
+        totalMotion < 0.2 * dt * 60 &&
+        Math.abs(rotVel) < 0.3 &&
+        Math.abs(targetAngle - rot) < 0.1 &&
+        Math.abs(earRVel) + Math.abs(earLVel) < 0.3 &&
+        Math.abs(scaleY - 1) < 0.002;
+
+      if (!dragging && isResting) {
         running = false;
         return;
       }
@@ -294,6 +554,8 @@ const { className = "", noEntrance = false } = Astro.props;
 
     function toggleTheme() {
       playConfirmSound();
+      root?.classList.add("is-touched");
+
       const isDark = document.documentElement.classList.contains("dark");
       const nextDark = !isDark;
       if (nextDark) {
@@ -304,26 +566,21 @@ const { className = "", noEntrance = false } = Astro.props;
         localStorage.setItem("theme", "light");
       }
 
-      // Sync any theme switch UI
-      const headerSwitch = document.getElementById("theme-toggle");
-      if (headerSwitch) {
-        headerSwitch.setAttribute("data-state", nextDark ? "checked" : "unchecked");
-        headerSwitch.setAttribute("aria-checked", nextDark ? "true" : "false");
-      }
       knobBtn?.setAttribute("aria-pressed", nextDark ? "true" : "false");
     }
 
     function scriptedPull() {
       toggleTheme();
       if (reduce) return;
-      pts[last].oy -= 24; // downward recoil impulse
+      pts[last].oy -= 30; // tactile recoil
       wake();
     }
 
-    // Pointer events (native drag with pointer capture)
+    // Pointer event interaction
     knobBtn.addEventListener("pointerdown", (e) => {
       if (reduce) return;
       knobBtn.setPointerCapture(e.pointerId);
+      root?.classList.add("is-touched");
       dragging = true;
       didDrag = true;
       clicked = false;
@@ -334,20 +591,20 @@ const { className = "", noEntrance = false } = Astro.props;
 
     knobBtn.addEventListener("pointermove", (e) => {
       if (!dragging) return;
-      const offsetX = e.clientX - dragStartX;
-      const offsetY = e.clientY - dragStartY;
+      const k = 0.85; // match scale
+      const dx = (e.clientX - dragStartX) / k;
+      const dy = (e.clientY - dragStartY) / k;
 
-      const rx = offsetX;
-      const ry = REST_Y + offsetY;
+      const rx = dx;
+      const ry = Zs + dy;
       const dist = Math.hypot(rx, ry) || 0.0001;
-      const maxD = REST_Y + config.stretchMax;
-      const k = dist > maxD ? maxD / dist : 1;
+      const maxD = Zs + stretchMax;
+      const factor = dist > maxD ? maxD / dist : 1;
 
-      target.x = ANCHOR_X + rx * k;
-      target.y = ry * k;
+      target.x = rx * factor;
+      target.y = ry * factor;
 
-      const clickAt = Math.min(config.stretchToggle, config.stretchMax - 1);
-      if (!clicked && dist - REST_Y >= clickAt) {
+      if (!clicked && dist - Zs >= stretchToggle) {
         clicked = true;
         toggleTheme();
       }
@@ -364,8 +621,8 @@ const { className = "", noEntrance = false } = Astro.props;
       const vx = p.x - p.ox;
       const vy = p.y - p.oy;
       const v = Math.hypot(vx, vy);
-      if (v > config.maxVelocity) {
-        const k = config.maxVelocity / v;
+      if (v > maxVelocity) {
+        const k = maxVelocity / v;
         p.ox = p.x - vx * k;
         p.oy = p.y - vy * k;
       }
@@ -379,7 +636,7 @@ const { className = "", noEntrance = false } = Astro.props;
     knobBtn.addEventListener("pointerup", onPointerUp);
     knobBtn.addEventListener("pointercancel", onPointerUp);
 
-    // Keyboard & click handlers
+    // Click & Keyboard triggers
     knobBtn.addEventListener("click", (e) => {
       if (didDrag) return;
       if (e.detail === 0) return;
@@ -393,27 +650,7 @@ const { className = "", noEntrance = false } = Astro.props;
       }
     });
 
-    // Handle entrance drop-in settle
-    let dropDone = wrapper.dataset.noEntrance === "true";
-    function endDrop() {
-      if (dropDone) return;
-      dropDone = true;
-      inner?.classList.remove("pullcord-inner--drop");
-      if (reduce) return;
-      pts[last].oy -= 14; // downward momentum handoff
-      pts[last].ox -= 7; // subtle sway
-      wake();
-    }
-
-    inner.addEventListener("animationend", (e) => {
-      if (e.animationName === "pullcord-drop") {
-        endDrop();
-      }
-    });
-
-    setTimeout(endDrop, 1500);
-
-    // Cancel animation frame when document becomes hidden
+    // Cleanup on visibilitychange
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && running) {
         cancelAnimationFrame(rafId);
@@ -421,14 +658,20 @@ const { className = "", noEntrance = false } = Astro.props;
       }
     });
 
-    // Initial render
+    // Initial render & gentle initial bounce
     render();
+    setTimeout(() => {
+      if (!reduce) {
+        pts[last].oy -= 14;
+        pts[last].ox -= 6;
+        wake();
+      }
+    }, 400);
   }
 
-  // Initialize on load and view transitions
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initPullCord);
+    document.addEventListener("DOMContentLoaded", initPullCordV2);
   } else {
-    initPullCord();
+    initPullCordV2();
   }
 </script>
