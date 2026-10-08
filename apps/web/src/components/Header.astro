@@ -1,6 +1,4 @@
 ---
-import Switch from "./ui/Switch.astro";
-
 const links = [
   { to: "/", label: "Home" },
   { to: "#about", label: "About" },
@@ -18,7 +16,7 @@ const links = [
       >
         pn<span class="text-brand-base">.</span>
       </a>
-      <nav class="hidden sm:flex items-center gap-5 text-sm">
+      <nav class="flex items-center gap-5 text-sm">
         {links.map((link) => (
           <a
             href={link.to}
@@ -29,42 +27,5 @@ const links = [
         ))}
       </nav>
     </div>
-
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2">
-        <label
-          for="theme-toggle"
-          class="text-xs text-foreground-tertiary font-paper select-none cursor-pointer"
-        >
-          Theme
-        </label>
-        <Switch id="theme-toggle" aria-label="Toggle theme" />
-      </div>
-    </div>
   </div>
 </header>
-
-<script is:inline>
-  const toggle = document.getElementById("theme-toggle");
-  if (toggle) {
-    const isDark = document.documentElement.classList.contains("dark");
-    toggle.setAttribute("data-state", isDark ? "checked" : "unchecked");
-    toggle.setAttribute("aria-checked", isDark ? "true" : "false");
-
-    toggle.addEventListener("click", () => {
-      const currentlyDark = document.documentElement.classList.contains("dark");
-      const nextDark = !currentlyDark;
-      if (nextDark) {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-        toggle.setAttribute("data-state", "checked");
-        toggle.setAttribute("aria-checked", "true");
-      } else {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-        toggle.setAttribute("data-state", "unchecked");
-        toggle.setAttribute("aria-checked", "false");
-      }
-    });
-  }
-</script>
