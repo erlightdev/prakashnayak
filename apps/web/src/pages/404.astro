@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { NotFoundTerminal } from "../components/motion/not-found/terminal";
+
+const attemptedPath = Astro.url.pathname;
+---
+
+<Layout title="404 — Page Not Found | Prakash Nayak">
+  <main class="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 md:px-8">
+    <NotFoundTerminal
+      client:load
+      path={attemptedPath}
+      code="404"
+      title="Page not found"
+      description="The page you are looking for moved, vanished, or never existed in this directory."
+      homeHref="/"
+      homeLabel="Back to Home"
+      browseHref="/#projects"
+      browseLabel="View Projects"
+    />
+  </main>
+</Layout>
