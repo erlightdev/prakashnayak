@@ -1,0 +1,434 @@
+---
+interface Props {
+  className?: string;
+  noEntrance?: boolean;
+}
+
+const { className = "", noEntrance = false } = Astro.props;
+---
+
+<div
+  class:list={["pullcord", className]}
+  id="pullcord-wrapper"
+  data-no-entrance={noEntrance ? "true" : "false"}
+  aria-hidden="false"
+>
+  <div class="pullcord-inner pullcord-inner--drop" id="pullcord-inner">
+    <svg
+      viewBox="0 0 64 340"
+      width="64"
+      height="340"
+      aria-hidden="true"
+      style="overflow: visible;"
+    >
+      <defs>
+        <linearGradient id="pc-knob-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--base-white, #ffffff)"></stop>
+          <stop offset="100%" stop-color="var(--background-tertiary, #ebe9e6)"></stop>
+        </linearGradient>
+        <filter id="pc-knob-shadow" x="-70%" y="-70%" width="240%" height="240%">
+          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.3)"></feDropShadow>
+        </filter>
+      </defs>
+
+      <path
+        id="pullcord-path"
+        stroke="var(--foreground-tertiary, rgba(127, 127, 127, 0.45))"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"
+        vector-effect="non-scaling-stroke"
+      ></path>
+
+      <g id="pullcord-knob-group">
+        <g filter="url(#pc-knob-shadow)">
+          <circle
+            cx="32"
+            cy="176"
+            r="7"
+            fill="url(#pc-knob-grad)"
+            stroke="var(--border-tertiary, rgba(0,0,0,0.15))"
+            stroke-width="0.75"
+          ></circle>
+          <circle
+            cx="32"
+            cy="176"
+            r="2"
+            fill="var(--brand-base, #0c8c5e)"
+          ></circle>
+        </g>
+      </g>
+    </svg>
+
+    <button
+      id="pullcord-knob-btn"
+      type="button"
+      class="pullcord-knob"
+      aria-label="Pull cord to toggle theme"
+      title="Pull cord to toggle light / dark theme"
+      tabindex="0"
+    ></button>
+  </div>
+</div>
+
+<style>
+  .pullcord {
+    position: fixed;
+    top: var(--pullcord-top, 0px);
+    right: var(--pullcord-right, max(1.25rem, calc((100vw - 1088px) / 2 + 1.25rem)));
+    z-index: var(--pullcord-z, 45);
+    width: 64px;
+    height: 340px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .pullcord-inner {
+    position: absolute;
+    inset: 0;
+  }
+
+  .pullcord-inner--drop {
+    animation: pullcord-drop 0.65s 0.35s cubic-bezier(0.45, 0, 0.9, 0.5) both;
+  }
+
+  @keyframes pullcord-drop {
+    0% {
+      opacity: 0;
+      transform: translateY(-240px);
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pullcord-inner--drop {
+      animation: none !important;
+    }
+  }
+
+  .pullcord-knob {
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 50%;
+    position: absolute;
+    left: 9px; /* 32 - 46/2 = 9 */
+    top: 153px; /* 176 - 46/2 = 153 */
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: grab;
+    touch-action: none;
+    pointer-events: auto;
+    outline: none;
+  }
+
+  .pullcord-knob:active {
+    cursor: grabbing;
+  }
+
+  .pullcord-knob:focus-visible {
+    outline: 2px solid var(--brand-base, #0c8c5e);
+    outline-offset: -9px;
+  }
+</style>
+
+<script>
+  import { playConfirmSound } from "../../lib/sound";
+
+  function initPullCord() {
+    const wrapper = document.getElementById("pullcord-wrapper");
+    const inner = document.getElementById("pullcord-inner");
+    const cordPath = document.getElementById("pullcord-path") as SVGPathElement | null;
+    const knobGroup = document.getElementById("pullcord-knob-group") as SVGGElement | null;
+    const knobBtn = document.getElementById("pullcord-knob-btn") as HTMLButtonElement | null;
+
+    if (!wrapper || !inner || !cordPath || !knobGroup || !knobBtn) return;
+
+    // Geometry constants
+    const W = 64;
+    const ANCHOR_X = W / 2; // 32
+    const REST_Y = 176;
+    const SEGMENTS = 16;
+    const REST_SEG = REST_Y / SEGMENTS; // 11
+
+    // Physics configuration
+    const config = {
+      gravity: 1250,
+      damping: 0.94,
+      iterations: 20,
+      stretchMax: 28,
+      stretchToggle: 20,
+      maxVelocity: 22,
+      sleepVelocity: 0.15,
+    };
+
+    type RopeNode = { x: number; y: number; ox: number; oy: number; fixed: boolean };
+
+    function makeNodes(): RopeNode[] {
+      const arr: RopeNode[] = [];
+      for (let i = 0; i <= SEGMENTS; i++) {
+        const y = REST_SEG * i;
+        arr.push({ x: ANCHOR_X, y, ox: ANCHOR_X, oy: y, fixed: i === 0 });
+      }
+      return arr;
+    }
+
+    function buildPath(p: RopeNode[]): string {
+      let d = `M ${p[0].x.toFixed(1)} ${p[0].y.toFixed(1)}`;
+      for (let i = 1; i < p.length - 1; i++) {
+        const xc = (p[i].x + p[i + 1].x) / 2;
+        const yc = (p[i].y + p[i + 1].y) / 2;
+        d += ` Q ${p[i].x.toFixed(1)} ${p[i].y.toFixed(1)} ${xc.toFixed(1)} ${yc.toFixed(1)}`;
+      }
+      const n = p.length - 1;
+      d += ` L ${p[n].x.toFixed(1)} ${p[n].y.toFixed(1)}`;
+      return d;
+    }
+
+    const pts = makeNodes();
+    const last = pts.length - 1;
+
+    let dragging = false;
+    let didDrag = false;
+    let clicked = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    const target = { x: ANCHOR_X, y: REST_Y };
+
+    let rafId = 0;
+    let running = false;
+    let prevT = 0;
+    let prevDt = 0;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function render() {
+      cordPath!.setAttribute("d", buildPath(pts));
+      const tx = (pts[last].x - ANCHOR_X).toFixed(2);
+      const ty = (pts[last].y - REST_Y).toFixed(2);
+      knobGroup!.setAttribute("transform", `translate(${tx} ${ty})`);
+      knobBtn!.style.transform = `translate(${tx}px, ${ty}px)`;
+    }
+
+    function step(now: number) {
+      const { gravity, damping, iterations, sleepVelocity } = config;
+      const dt = prevT ? Math.min(0.04, Math.max(0.004, (now - prevT) / 1000)) : 1 / 60;
+      prevT = now;
+      const tc = prevDt > 0 ? dt / prevDt : 1;
+      const velCoef = Math.pow(damping, dt * 60) * tc;
+      const accCoef = dt * dt;
+
+      for (let i = 1; i <= last; i++) {
+        const p = pts[i];
+        if (p.fixed) continue;
+        const vx = p.x - p.ox;
+        const vy = p.y - p.oy;
+        p.ox = p.x;
+        p.oy = p.y;
+        p.x += vx * velCoef;
+        p.y += vy * velCoef + gravity * accCoef;
+      }
+
+      pts[0].x = ANCHOR_X;
+      pts[0].y = 0;
+
+      if (dragging) {
+        pts[last].ox = pts[last].x;
+        pts[last].oy = pts[last].y;
+        pts[last].x = target.x;
+        pts[last].y = target.y;
+      }
+
+      for (let k = 0; k < iterations; k++) {
+        for (let i = 0; i < last; i++) {
+          const a = pts[i];
+          const b = pts[i + 1];
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.hypot(dx, dy) || 0.0001;
+          const diff = ((REST_SEG - dist) / dist) * 0.5;
+          const ox = dx * diff;
+          const oy = dy * diff;
+          if (!a.fixed) {
+            a.x -= ox;
+            a.y -= oy;
+          }
+          if (!b.fixed) {
+            b.x += ox;
+            b.y += oy;
+          }
+        }
+      }
+
+      prevDt = dt;
+      render();
+
+      let speed = 0;
+      for (let i = 1; i < pts.length; i++) {
+        speed += Math.abs(pts[i].x - pts[i].ox) + Math.abs(pts[i].y - pts[i].oy);
+      }
+
+      if (!dragging && speed < sleepVelocity * dt * 60) {
+        render();
+        running = false;
+        return;
+      }
+
+      rafId = requestAnimationFrame(step);
+    }
+
+    function wake() {
+      if (running) return;
+      running = true;
+      prevT = 0;
+      prevDt = 0;
+      rafId = requestAnimationFrame(step);
+    }
+
+    function toggleTheme() {
+      playConfirmSound();
+      const isDark = document.documentElement.classList.contains("dark");
+      const nextDark = !isDark;
+      if (nextDark) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+
+      // Sync any theme switch UI
+      const headerSwitch = document.getElementById("theme-toggle");
+      if (headerSwitch) {
+        headerSwitch.setAttribute("data-state", nextDark ? "checked" : "unchecked");
+        headerSwitch.setAttribute("aria-checked", nextDark ? "true" : "false");
+      }
+      knobBtn?.setAttribute("aria-pressed", nextDark ? "true" : "false");
+    }
+
+    function scriptedPull() {
+      toggleTheme();
+      if (reduce) return;
+      pts[last].oy -= 24; // downward recoil impulse
+      wake();
+    }
+
+    // Pointer events (native drag with pointer capture)
+    knobBtn.addEventListener("pointerdown", (e) => {
+      if (reduce) return;
+      knobBtn.setPointerCapture(e.pointerId);
+      dragging = true;
+      didDrag = true;
+      clicked = false;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      wake();
+    });
+
+    knobBtn.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const offsetX = e.clientX - dragStartX;
+      const offsetY = e.clientY - dragStartY;
+
+      const rx = offsetX;
+      const ry = REST_Y + offsetY;
+      const dist = Math.hypot(rx, ry) || 0.0001;
+      const maxD = REST_Y + config.stretchMax;
+      const k = dist > maxD ? maxD / dist : 1;
+
+      target.x = ANCHOR_X + rx * k;
+      target.y = ry * k;
+
+      const clickAt = Math.min(config.stretchToggle, config.stretchMax - 1);
+      if (!clicked && dist - REST_Y >= clickAt) {
+        clicked = true;
+        toggleTheme();
+      }
+    });
+
+    function onPointerUp(e: PointerEvent) {
+      if (!dragging) return;
+      try {
+        knobBtn?.releasePointerCapture(e.pointerId);
+      } catch {}
+      dragging = false;
+
+      const p = pts[last];
+      const vx = p.x - p.ox;
+      const vy = p.y - p.oy;
+      const v = Math.hypot(vx, vy);
+      if (v > config.maxVelocity) {
+        const k = config.maxVelocity / v;
+        p.ox = p.x - vx * k;
+        p.oy = p.y - vy * k;
+      }
+
+      wake();
+      requestAnimationFrame(() => {
+        didDrag = false;
+      });
+    }
+
+    knobBtn.addEventListener("pointerup", onPointerUp);
+    knobBtn.addEventListener("pointercancel", onPointerUp);
+
+    // Keyboard & click handlers
+    knobBtn.addEventListener("click", (e) => {
+      if (didDrag) return;
+      if (e.detail === 0) return;
+      scriptedPull();
+    });
+
+    knobBtn.addEventListener("keydown", (e) => {
+      if ((e.key === "Enter" || e.key === " ") && !e.repeat) {
+        e.preventDefault();
+        scriptedPull();
+      }
+    });
+
+    // Handle entrance drop-in settle
+    let dropDone = wrapper.dataset.noEntrance === "true";
+    function endDrop() {
+      if (dropDone) return;
+      dropDone = true;
+      inner?.classList.remove("pullcord-inner--drop");
+      if (reduce) return;
+      pts[last].oy -= 14; // downward momentum handoff
+      pts[last].ox -= 7; // subtle sway
+      wake();
+    }
+
+    inner.addEventListener("animationend", (e) => {
+      if (e.animationName === "pullcord-drop") {
+        endDrop();
+      }
+    });
+
+    setTimeout(endDrop, 1500);
+
+    // Cancel animation frame when document becomes hidden
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && running) {
+        cancelAnimationFrame(rafId);
+        running = false;
+      }
+    });
+
+    // Initial render
+    render();
+  }
+
+  // Initialize on load and view transitions
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPullCord);
+  } else {
+    initPullCord();
+  }
+</script>
