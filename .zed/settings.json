@@ -1,11 +1,5 @@
 {
   "context_servers": {
-    "better-t-stack": {
-      "source": "custom",
-      "command": "bunx",
-      "args": ["create-better-t-stack@latest", "mcp"],
-      "env": {}
-    },
     "context7": {
       "source": "custom",
       "command": "npx",

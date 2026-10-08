@@ -1,28 +1,231 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Button from "../components/ui/Button.astro";
+import Card from "../components/ui/Card.astro";
+import Badge from "../components/ui/Badge.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
 
-const TITLE_TEXT = `
- ██████╗ ███████╗████████╗████████╗███████╗██████╗
- ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
- ██████╔╝█████╗     ██║      ██║   █████╗  ██████╔╝
- ██╔══██╗██╔══╝     ██║      ██║   ██╔══╝  ██╔══██╗
- ██████╔╝███████╗   ██║      ██║   ███████╗██║  ██║
- ╚═════╝ ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝
+const projects = [
+  {
+    title: "High-Performance Distributed Cache",
+    description:
+      "A zero-allocation caching engine built with custom eviction strategies and sub-millisecond retrieval.",
+    tags: ["Rust", "Systems", "Networking"],
+    href: "#project-1",
+    metric: "0.18ms p99",
+  },
+  {
+    title: "Real-time Telemetry Pipeline",
+    description:
+      "Multi-tenant streaming data platform handling high-throughput event ingestion and windowed aggregations.",
+    tags: ["TypeScript", "ClickHouse", "Kafka"],
+    href: "#project-2",
+    metric: "120k req/s",
+  },
+  {
+    title: "Adaptive Type Generation Toolchain",
+    description:
+      "Schema-first compilation toolchain generating type-safe contracts and runtime validators.",
+    tags: ["Compiler", "AST", "TypeScript"],
+    href: "#project-3",
+    metric: "10x faster",
+  },
+];
 
- ████████╗    ███████╗████████╗ █████╗  ██████╗██╗  ██╗
- ╚══██╔══╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝
-    ██║       ███████╗   ██║   ███████║██║     █████╔╝
-    ██║       ╚════██║   ██║   ██╔══██║██║     ██╔═██╗
-    ██║       ███████║   ██║   ██║  ██║╚██████╗██║  ██╗
-    ╚═╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
- `;
+const designTokens = [
+  { name: "Brand Base", class: "bg-brand-base text-base-white", label: "Dynamic hue" },
+  { name: "Brand 8%", class: "bg-brand-8 text-brand-base ring-1 ring-brand-20", label: "Subtle tint" },
+  { name: "Surface Sec", class: "bg-background-secondary text-foreground-primary ring-1 ring-border-secondary", label: "Raised" },
+  { name: "Surface Tert", class: "bg-background-tertiary text-foreground-secondary ring-1 ring-border-line", label: "Inset fill" },
+];
 ---
 
-<Layout title="prakashnayak">
-  <div class="container mx-auto max-w-3xl px-4 py-2">
-    <pre class="overflow-x-auto font-mono text-sm text-white">{TITLE_TEXT}</pre>
-    <div class="grid gap-6">
-    </div>
-  </div>
-</Layout>
+<Layout title="Prakash Nayak — Software Engineer">
+  <!-- Hero Section -->
+  <section class="py-16 md:py-24 px-4 md:px-8" data-line>
+    <div class="max-w-3xl flex flex-col gap-6">
+      <div class="flex items-center gap-2">
+        <Badge variant="brand">Available for Select Projects</Badge>
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-base animate-pulse"></span>
+      </div>
 
+      <h1 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground-primary leading-[1.15]">
+        Building scalable infrastructure, developer tools, and refined web experiences.
+      </h1>
+
+      <p class="text-lg text-foreground-secondary leading-relaxed font-sans max-w-2xl">
+        I am Prakash Nayak, a software engineer specialized in distributed systems, web architectures,
+        and developer productivity. Focused on clarity, reliability, and precision.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <Button variant="primary" size="lg" href="#contact">
+          Get Started
+        </Button>
+        <Button variant="secondary" size="lg" href="#projects">
+          View Selected Work
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Token & Elevation Showcase -->
+  <section class="py-12 px-4 md:px-8 bg-background-secondary/40" data-line>
+    <div class="flex flex-col gap-6">
+      <SectionHeader
+        title="Design System Foundations"
+        subtitle="Theme-resolved color tokens, layered drop shadows, and responsive grid alignment."
+        badge="System Tokens"
+      />
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {designTokens.map((token) => (
+          <div class={`rounded-[6px] p-4 flex flex-col justify-between h-28 shadow-drop-sm ${token.class}`}>
+            <span class="font-paper text-xs uppercase tracking-wider">{token.label}</span>
+            <span class="font-mono text-sm font-medium">{token.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected Projects -->
+  <section id="projects" class="py-16 px-4 md:px-8" data-line>
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <SectionHeader
+          title="Selected Projects"
+          subtitle="Recent technical systems, distributed engines, and developer software."
+        />
+        <span class="font-paper text-xs text-foreground-tertiary">
+          Archive 2024 — 2026
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <Card
+            variant="feature"
+            padding="lg"
+            href={project.href}
+            ctaText="Explore architecture"
+            class="group flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs text-brand-base font-medium">
+                  {project.metric}
+                </span>
+                <span class="font-paper text-xs text-foreground-muted">
+                  Production
+                </span>
+              </div>
+              <h3 class="text-lg font-medium text-foreground-primary tracking-tight">
+                {project.title}
+              </h3>
+              <p class="mt-2 text-sm text-foreground-secondary leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-1.5 pt-4 border-t border-border-primary">
+              {project.tags.map((tag) => (
+                <Badge variant="outline">{tag}</Badge>
+              ))}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Depth & Architecture Callout -->
+  <section class="py-16 px-4 md:px-8 bg-background-secondary" data-line>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        <Badge variant="brand" class="mb-3">Architectural Philosophy</Badge>
+        <h2 class="section-heading text-foreground-primary">
+          Engineered for deterministic performance and clarity.
+        </h2>
+        <p class="mt-4 text-foreground-secondary leading-relaxed">
+          Every layer of the system is carefully decoupled. From tokenized design primitives
+          and zero-FOUC theme hydration to type-safe environment schemas and responsive layout
+          rails.
+        </p>
+
+        <ul class="mt-6 space-y-3 text-sm text-foreground-secondary font-mono">
+          <li class="flex items-center gap-2">
+            <span class="text-brand-base">✓</span> Class-based dynamic theme resolution
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-brand-base">✓</span> Inset rings blending with diffuse drop shadows
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-brand-base">✓</span> Accessible focus rings with 2px brand outline
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-brand-base">✓</span> Strict accessibility & prefers-reduced-motion honor
+          </li>
+        </ul>
+      </div>
+
+      <div class="rounded-[10px] bg-background-primary p-6 ring-1 ring-inset ring-border-secondary shadow-feature-card">
+        <div class="flex items-center justify-between border-b border-border-line pb-3 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-border-tertiary"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-border-tertiary"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-border-tertiary"></span>
+          </div>
+          <span class="font-mono text-xs text-foreground-muted">system-spec.ts</span>
+        </div>
+        <pre class="overflow-x-auto font-mono text-xs text-foreground-secondary leading-relaxed"><code><span class="text-brand-base">export const</span> system = &#123;
+  theme: <span class="text-brand-vivid">"dynamic-tokenized"</span>,
+  grid: &#123; columns: [4, 12, 24], maxWidth: <span class="text-foreground-primary">1088</span> &#125;,
+  easing: <span class="text-brand-vivid">"cubic-bezier(.22, 1, .36, 1)"</span>,
+  accessibility: &#123;
+    motionReduction: <span class="text-brand-base">true</span>,
+    stretchedLinks: <span class="text-brand-base">true</span>,
+  &#125;,
+&#125;;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Footer -->
+  <footer id="contact" class="py-16 px-4 md:px-8">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div>
+        <h3 class="text-xl font-medium text-foreground-primary tracking-tight">
+          Let's connect
+        </h3>
+        <p class="text-sm text-foreground-secondary mt-1">
+          Open to technical advisory, consulting, and engineering roles.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <Button
+          variant="primary"
+          size="lg"
+          href="mailto:contact@prakashnayak.com"
+        >
+          Send an Email
+        </Button>
+        <Button
+          variant="outline"
+          size="lg"
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </Button>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-paper text-foreground-muted">
+      <span>© 2026 Prakash Nayak. All rights reserved.</span>
+      <span>Tokenized Design System — 24-Column Grid</span>
+    </div>
+  </footer>
+</Layout>

@@ -4,22 +4,105 @@ import Header from "../components/Header.astro";
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title = "prakashnayak" } = Astro.props;
+const {
+  title = "prakashnayak",
+  description = "Personal portfolio and web application",
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" href="/sounds/confirm.wav" as="fetch" crossorigin="anonymous" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      const getInitialTheme = () => {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      };
+
+      const initialTheme = getInitialTheme();
+      if (initialTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
   </head>
-  <body class="min-h-screen bg-neutral-950 text-white">
-    <Header />
-    <slot />
+  <body class="min-h-screen bg-background-primary text-foreground-primary">
+    <div
+      class="mx-auto min-h-screen max-w-[var(--grid-max-width)] border-x border-border-line"
+      data-rail
+    >
+      <Header />
+      <slot />
+    </div>
+
+    <script is:inline>
+      (() => {
+        let buttonAudio = null;
+        let lastPlayed = 0;
+
+        const playConfirm = () => {
+          const now = Date.now();
+          if (now - lastPlayed < 60) return;
+          lastPlayed = now;
+
+          try {
+            if (!buttonAudio) {
+              buttonAudio = new Audio("/sounds/confirm.wav");
+            }
+            const sound = buttonAudio.cloneNode();
+            sound.volume = 0.45;
+            sound.play().catch(() => {});
+          } catch {}
+        };
+
+        // Pointerdown triggers sound in sync with active tactile press
+        document.addEventListener(
+          "pointerdown",
+          (e) => {
+            const target = e.target;
+            if (target && target.closest && target.closest('[data-slot="button"], [data-slot="switch"]')) {
+              playConfirm();
+            }
+          },
+          { passive: true }
+        );
+
+        // Keyboard trigger for accessibility (Enter / Space)
+        document.addEventListener(
+          "keydown",
+          (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              const active = document.activeElement;
+              if (active && active.closest && active.closest('[data-slot="button"], [data-slot="switch"]')) {
+                playConfirm();
+              }
+            }
+          },
+          { passive: true }
+        );
+      })();
+    </script>
   </body>
 </html>

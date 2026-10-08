@@ -1,21 +1,70 @@
 ---
+import Switch from "./ui/Switch.astro";
+
 const links = [
   { to: "/", label: "Home" },
+  { to: "#about", label: "About" },
+  { to: "#projects", label: "Projects" },
+  { to: "#contact", label: "Contact" },
 ];
 ---
 
-<div>
-  <div class="flex flex-row items-center justify-between px-4 py-2 md:px-6">
-    <nav class="flex gap-4 text-lg">
-      {links.map((link) => (
-        <a href={link.to} class="text-white hover:text-neutral-400 transition-colors">
-          {link.label}
-        </a>
-      ))}
-    </nav>
-    <div class="flex items-center gap-2" id="user-menu-container">
+<header class="sticky top-0 z-40 bg-background-primary/90 backdrop-blur-sm" data-line>
+  <div class="flex items-center justify-between px-4 py-3 md:px-8">
+    <div class="flex items-center gap-6">
+      <a
+        href="/"
+        class="font-mono text-sm font-semibold tracking-tight text-foreground-primary outline-none focus-visible:ring-2 focus-visible:ring-brand-base focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary rounded-[2px]"
+      >
+        pn<span class="text-brand-base">.</span>
+      </a>
+      <nav class="hidden sm:flex items-center gap-5 text-sm">
+        {links.map((link) => (
+          <a
+            href={link.to}
+            class="text-foreground-secondary hover:text-foreground-primary transition-colors duration-150 ease-[var(--ease-out-soft)] outline-none focus-visible:ring-2 focus-visible:ring-brand-base focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary rounded-[2px]"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <label
+          for="theme-toggle"
+          class="text-xs text-foreground-tertiary font-paper select-none cursor-pointer"
+        >
+          Theme
+        </label>
+        <Switch id="theme-toggle" aria-label="Toggle theme" />
+      </div>
     </div>
   </div>
-  <hr class="border-neutral-800" />
-</div>
+</header>
 
+<script is:inline>
+  const toggle = document.getElementById("theme-toggle");
+  if (toggle) {
+    const isDark = document.documentElement.classList.contains("dark");
+    toggle.setAttribute("data-state", isDark ? "checked" : "unchecked");
+    toggle.setAttribute("aria-checked", isDark ? "true" : "false");
+
+    toggle.addEventListener("click", () => {
+      const currentlyDark = document.documentElement.classList.contains("dark");
+      const nextDark = !currentlyDark;
+      if (nextDark) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        toggle.setAttribute("data-state", "checked");
+        toggle.setAttribute("aria-checked", "true");
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        toggle.setAttribute("data-state", "unchecked");
+        toggle.setAttribute("aria-checked", "false");
+      }
+    });
+  }
+</script>

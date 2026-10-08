@@ -1,0 +1,61 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "../../lib/utils";
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center font-semibold text-center tracking-[-0.18px] transition-all duration-100 select-none cursor-pointer overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-brand-base focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        primary:
+          "bg-[var(--brand-button-bg)] border border-[var(--brand-button-border)] text-white shadow-[0px_3px_0px_0px_var(--brand-button-shadow)] hover:bg-[var(--brand-button-hover)] active:bg-[var(--brand-button-hover)] active:shadow-none active:translate-y-[3px]",
+        secondary:
+          "bg-background-secondary border border-border-secondary text-foreground-primary shadow-[0px_3px_0px_0px_var(--border-tertiary)] hover:bg-background-tertiary active:bg-background-tertiary active:shadow-none active:translate-y-[3px]",
+        outline:
+          "bg-background-transparent border border-border-line text-foreground-primary hover:bg-background-secondary active:translate-y-[1px]",
+        ghost:
+          "bg-background-transparent text-foreground-secondary hover:text-foreground-primary hover:bg-background-secondary",
+      },
+      size: {
+        sm: "h-[36px] px-4 text-[13px] rounded-[12px] shadow-[0px_2px_0px_0px_var(--brand-button-shadow)] active:translate-y-[2px] gap-1.5",
+        md: "h-[44px] px-5 text-[15px] rounded-[14px] shadow-[0px_3px_0px_0px_var(--brand-button-shadow)] active:translate-y-[3px] gap-2",
+        lg: "h-[48px] px-6 text-[16px] rounded-[16px] shadow-[0px_3px_0px_0px_var(--brand-button-shadow)] active:translate-y-[3px] gap-2.5",
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+      size: "lg",
+    },
+  }
+);
+
+type Props = (
+  | ({ href?: undefined } & HTMLAttributes<"button">)
+  | ({ href: string } & HTMLAttributes<"a">)
+) &
+  VariantProps<typeof buttonVariants>;
+
+const { variant, size, class: className, href, ...props } = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      data-slot="button"
+      class={cn(buttonVariants({ variant, size }), className)}
+      {...(props as HTMLAttributes<"a">)}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      data-slot="button"
+      class={cn(buttonVariants({ variant, size }), className)}
+      {...(props as HTMLAttributes<"button">)}
+    >
+      <slot />
+    </button>
+  )
+}

@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../../lib/utils";
+
+interface Props extends HTMLAttributes<"button"> {
+  checked?: boolean;
+  id?: string;
+}
+
+const { checked = false, id, class: className, ...props } = Astro.props;
+---
+
+<button
+  type="button"
+  role="switch"
+  id={id}
+  data-slot="switch"
+  data-state={checked ? "checked" : "unchecked"}
+  aria-checked={checked ? "true" : "false"}
+  class={cn(className)}
+  {...props}
+>
+  <span data-slot="switch-thumb"></span>
+</button>

@@ -1,0 +1,77 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "../../lib/utils";
+
+const cardVariants = cva(
+  "relative rounded-[6px] transition-all duration-200 ease-[var(--ease-out-soft)] overflow-hidden",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-background-secondary shadow-drop-sm ring-1 ring-inset ring-border-secondary hover:shadow-drop-md",
+        feature:
+          "bg-background-secondary shadow-feature-card ring-1 ring-inset ring-border-primary hover:ring-border-secondary",
+        inset:
+          "bg-background-tertiary ring-1 ring-inset ring-border-line",
+      },
+      padding: {
+        none: "p-0",
+        sm: "p-4",
+        md: "p-6",
+        lg: "p-8",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      padding: "md",
+    },
+  }
+);
+
+interface Props
+  extends HTMLAttributes<"div">,
+    VariantProps<typeof cardVariants> {
+  href?: string;
+  ctaText?: string;
+}
+
+const {
+  variant,
+  padding,
+  class: className,
+  href,
+  ctaText = "Learn more",
+  ...props
+} = Astro.props;
+---
+
+<div
+  data-slot="card"
+  class={cn(cardVariants({ variant, padding }), className)}
+  {...props}
+>
+  <slot />
+  {
+    href && (
+      <div class="mt-4 pt-2">
+        <a
+          href={href}
+          data-slot="card-link"
+          class="inline-flex items-center text-sm font-medium text-brand-base hover:text-brand-vivid after:absolute after:inset-0 outline-none focus-visible:ring-2 focus-visible:ring-brand-base focus-visible:ring-offset-2 focus-visible:ring-offset-background-secondary rounded-[2px]"
+        >
+          {ctaText}
+          <svg
+            class="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    )
+  }
+</div>
