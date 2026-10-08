@@ -1,0 +1,22 @@
+{
+  "context_servers": {
+    "better-t-stack": {
+      "source": "custom",
+      "command": "bunx",
+      "args": ["create-better-t-stack@latest", "mcp"],
+      "env": {}
+    },
+    "context7": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {}
+    },
+    "astro-docs": {
+      "source": "custom",
+      "type": "http",
+      "url": "https://mcp.docs.astro.build/mcp",
+      "headers": {}
+    }
+  }
+}
