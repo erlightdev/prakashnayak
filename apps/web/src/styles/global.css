@@ -182,6 +182,8 @@
   /* shadcn-style aliases so registry components pick up the site palette. */
   --color-background: var(--background-primary);
   --color-muted-foreground: var(--foreground-tertiary);
+  --color-primary: var(--foreground-primary);
+  --color-primary-foreground: var(--background-primary);
   --color-border: var(--border-secondary);
   --color-card: var(--background-secondary);
   --color-muted: var(--background-tertiary);
