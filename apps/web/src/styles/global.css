@@ -273,6 +273,18 @@ body {
 [data-rail] {
   border-left: 1px solid var(--border-line);
   border-right: 1px solid var(--border-line);
+  /* Solid column over the hatched page, so the pattern only shows in the gutters. */
+  background-color: var(--background-primary);
+}
+
+/* Diagonal hatching in the page gutters either side of the rail. */
+body:has([data-rail]) {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--border-secondary) 0 1px,
+    transparent 1px 9px
+  );
+  background-attachment: fixed;
 }
 
 [data-line] {

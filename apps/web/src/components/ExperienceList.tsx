@@ -8,57 +8,75 @@ import {
 } from "@/components/motion/center-morph-modal";
 import { experience, type Experience } from "@/data/experience";
 
+function Highlights({ item }: { item: Experience }) {
+  return item.groups.map((group) => (
+    <section key={group.title} className="flex flex-col gap-2">
+      <h4 className="font-mono text-[11px] uppercase tracking-[0.12em] text-foreground-muted">
+        {group.title}
+      </h4>
+      <ul className="flex flex-col gap-1.5">
+        {group.points.map((point) => (
+          <li
+            key={point}
+            className="relative pl-4 text-sm leading-relaxed text-foreground-secondary before:absolute before:left-0 before:top-[0.6em] before:h-1 before:w-1 before:rounded-full before:bg-brand-base"
+          >
+            {point}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ));
+}
+
 function ExperienceDetail({ item }: { item: Experience }) {
+  const company = item.url ? (
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-0.5 text-foreground-secondary transition-colors hover:text-brand-base"
+    >
+      {item.company}
+      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+    </a>
+  ) : (
+    <span className="text-foreground-secondary">{item.company}</span>
+  );
+
+  // Header stays put while the highlights scroll, so tall roles never push
+  // the title or tags off-screen.
   return (
-    <div className="flex flex-col gap-6 p-6 sm:p-7">
-      <header className="flex items-start gap-3 pr-10">
+    <div className="flex max-h-[calc(100dvh-7rem)] flex-col">
+      <header className="flex items-center gap-3 border-b border-border-line p-6 pr-16">
         <img
           src={item.logo}
           alt=""
-          width={40}
-          height={40}
-          className="h-10 w-10 shrink-0 rounded-[10px] ring-1 ring-inset ring-border-line"
+          width={44}
+          height={44}
+          className="h-11 w-11 shrink-0 rounded-[10px] ring-1 ring-inset ring-border-line"
         />
-        <div className="flex flex-col gap-1">
+        <div className="flex min-w-0 flex-col gap-0.5">
           <h3 className="text-lg font-medium leading-snug tracking-tight text-foreground-primary">
             {item.role}
           </h3>
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-fit items-center gap-1 text-sm text-foreground-secondary transition-colors hover:text-brand-base"
-          >
-            {item.company}
-            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-          </a>
-          <p className="font-mono text-xs text-foreground-tertiary">
-            {item.start} — {item.end} · {item.location}
+          <p className="text-sm">
+            {company}
+            <span className="font-mono text-xs text-foreground-tertiary">
+              {" "}
+              · {item.start} — {item.end} · {item.location}
+            </span>
           </p>
         </div>
       </header>
 
-      <div className="flex flex-col gap-5">
-        {item.groups.map((group) => (
-          <section key={group.title} className="flex flex-col gap-2">
-            <h4 className="font-mono text-[11px] uppercase tracking-[0.12em] text-foreground-muted">
-              {group.title}
-            </h4>
-            <ul className="flex flex-col gap-1.5">
-              {group.points.map((point) => (
-                <li
-                  key={point}
-                  className="relative pl-4 text-sm leading-relaxed text-foreground-secondary before:absolute before:left-0 before:top-[0.6em] before:h-1 before:w-1 before:rounded-full before:bg-brand-base"
-                >
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+      <div className="flex flex-col gap-5 overflow-y-auto overscroll-contain p-6">
+        <Highlights item={item} />
       </div>
 
-      <ul className="flex flex-wrap gap-1.5 border-t border-border-line pt-4">
+      <ul
+        aria-label="Stack"
+        className="flex flex-wrap gap-1.5 border-t border-border-line px-6 py-4"
+      >
         {item.stack.map((tech) => (
           <li
             key={tech}
@@ -113,6 +131,14 @@ export default function ExperienceList() {
                 </span>
               </button>
             </CenterMorphModalTrigger>
+            {/* The modal only mounts on open, so the highlights are also
+                rendered here for crawlers and screen readers. */}
+            <div className="sr-only">
+              <h3>
+                {item.role} at {item.company}, {item.start} to {item.end}
+              </h3>
+              <Highlights item={item} />
+            </div>
             <CenterMorphModalContent
               ariaLabel={`${item.role} at ${item.company}`}
               className="max-w-[34rem] border-border-secondary bg-background-primary"

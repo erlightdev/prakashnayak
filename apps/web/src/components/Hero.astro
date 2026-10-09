@@ -1,5 +1,6 @@
 ---
 import Button from "./ui/Button.astro";
+import { mailto } from "../data/profile";
 
 
 // `max` sets how much of the segmented meter each value fills; `tint` its colour.
@@ -51,7 +52,7 @@ const SEGMENTS = 24;
 
       <div class="flex flex-wrap items-center gap-3 pt-1" data-reveal>
         <span data-magnetic>
-          <Button variant="primary" size="md" href="mailto:erprakashnayak@gmail.com">
+          <Button variant="primary" size="md" href={mailto}>
             Get in touch
           </Button>
         </span>
@@ -85,15 +86,19 @@ const SEGMENTS = 24;
           class="hero-now absolute bottom-3 left-3 right-3 sm:right-auto flex items-center gap-3 rounded-[12px] border border-border-secondary bg-background-primary/85 px-3 py-2.5 shadow-drop-md backdrop-blur-md transition-colors hover:border-border-tertiary outline-none focus-visible:ring-2 focus-visible:ring-brand-base"
           data-reveal
         >
-          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-brand-10 font-mono text-[11px] font-semibold text-brand-base">
-            TDA
-          </span>
+          <img
+            src="/logos/tda.png"
+            alt=""
+            width={32}
+            height={32}
+            class="h-8 w-8 shrink-0 rounded-[8px] ring-1 ring-inset ring-border-line"
+          />
           <span class="flex flex-col">
             <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-foreground-muted">
               Currently · Dec 2024 — now
             </span>
             <span class="text-sm font-medium text-foreground-primary leading-snug">
-              UI/UX Developer, The Development Agency
+              WordPress & UI/UX Developer, The Development Agency
             </span>
           </span>
         </a>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Briefcase, User, Layers, AppWindow } from "lucide-react";
 import { Dock, DockCard, DockDivider } from "@/components/ui/dock";
+import { profile } from "@/data/profile";
 
 interface NavItem {
   id: string;
@@ -59,7 +60,7 @@ const externalItems: NavItem[] = [
   {
     id: "github",
     label: "GitHub",
-    href: "https://github.com/prakashnayak",
+    href: profile.github,
     external: true,
     icon: () => (
       <svg
@@ -74,7 +75,7 @@ const externalItems: NavItem[] = [
   {
     id: "linkedin",
     label: "LinkedIn",
-    href: "https://linkedin.com/in/prakashnayak",
+    href: profile.linkedin,
     external: true,
     icon: () => (
       <svg

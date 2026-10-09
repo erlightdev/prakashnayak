@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import ExperienceList from "../components/ExperienceList";
 import SkillsTabs from "../components/SkillsTabs";
+import { mailto, profile } from "../data/profile";
 import Button from "../components/ui/Button.astro";
 import Card from "../components/ui/Card.astro";
 import Badge from "../components/ui/Badge.astro";
@@ -129,18 +130,18 @@ const projects = [
         <Button
           variant="primary"
           size="lg"
-          href="mailto:contact@prakashnayak.com"
+          href={mailto}
         >
           Send an Email
         </Button>
         <Button
           variant="outline"
           size="lg"
-          href="https://github.com"
+          href={profile.linkedin}
           target="_blank"
           rel="noopener noreferrer"
         >
-          GitHub
+          LinkedIn
         </Button>
       </div>
     </div>
