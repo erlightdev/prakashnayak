@@ -154,7 +154,7 @@ export default function NavbarDock() {
   return (
     <nav
       aria-label="Main Dock Navigation"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto"
+      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto origin-bottom max-sm:scale-[0.84]"
     >
       <Dock className="bg-background-primary/80 backdrop-blur-xl ring-1 ring-border-primary border-border-line/70">
         <DockCard

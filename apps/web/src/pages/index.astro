@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
+import ExperienceList from "../components/ExperienceList";
 import Button from "../components/ui/Button.astro";
 import Card from "../components/ui/Card.astro";
 import Badge from "../components/ui/Badge.astro";
@@ -40,6 +41,17 @@ const projects = [
   description="Full-stack developer in Patan, Lalitpur building fast, SEO-friendly products with WordPress, React, Laravel and Django."
 >
   <Hero />
+
+  <!-- Experience -->
+  <section id="experience" class="py-12 md:py-16" data-line>
+    <div class="flex items-end justify-between gap-4 px-4 md:px-8 pb-6">
+      <SectionHeader title="Professional Experience" subtitle="Where I've built and shipped." />
+      <span class="font-mono text-xs text-foreground-tertiary">2018 — now</span>
+    </div>
+    <div class="border-t border-border-line">
+      <ExperienceList client:visible />
+    </div>
+  </section>
 
   <!-- Selected Projects -->
   <section id="projects" class="py-16 px-4 md:px-8" data-line>

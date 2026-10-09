@@ -11,7 +11,7 @@ const { className = "" } = Astro.props;
   id="pc2-container"
   aria-hidden="false"
 >
-  <div class="pc2" id="pc2-root" style="--pc2-k: 0.6;">
+  <div class="pc2" id="pc2-root" style="--pc2-k: 0.48;">
     <div class="pc2-anchor pc2-rig">
       <svg class="pc2-cord" viewBox="-240 0 480 430" width="480" height="430" aria-hidden="true">
         <defs>
@@ -120,6 +120,19 @@ const { className = "" } = Astro.props;
 </div>
 
 <style>
+  /* Phones: smaller lamp tucked into the corner so it stops covering copy. */
+  @media (max-width: 767px) {
+    .pc2-container {
+      right: 1.75rem;
+    }
+    .pc2 {
+      --pc2-k: 0.34 !important;
+    }
+    .pc2-hint {
+      display: none !important;
+    }
+  }
+
   .pc2-container {
     position: fixed;
     top: 0;

@@ -179,6 +179,9 @@
   --color-brand-btn-shadow: var(--brand-button-shadow);
   --color-brand-btn-hover: var(--brand-button-hover);
 
+  /* shadcn-style aliases so registry components pick up the site palette. */
+  --color-background: var(--background-primary);
+  --color-muted-foreground: var(--foreground-tertiary);
   --color-border: var(--border-secondary);
   --color-card: var(--background-secondary);
   --color-muted: var(--background-tertiary);
