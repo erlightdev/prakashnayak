@@ -1,4 +1,3 @@
-import node from "@astrojs/node";
 // @ts-check
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
@@ -11,8 +10,9 @@ export default defineConfig({
     react(),
     varlockAstroIntegration({ ssrInjectMode: "auto-load" }),
   ],
-  output: "server",
-  adapter: node({ mode: "standalone" }),
+  // Fully static: every page is prerendered, so any static host (Hostinger
+  // included) can serve dist/ with no Node process.
+  output: "static",
   vite: {
     plugins: [tailwindcss()],
   },

@@ -12,7 +12,6 @@
     "env:generate": "varlock codegen"
   },
   "dependencies": {
-    "@astrojs/node": "^11.1.5",
     "@astrojs/react": "^7.0.1",
     "@varlock/astro-integration": "1.4.1",
     "astro": "^7.3.1",
