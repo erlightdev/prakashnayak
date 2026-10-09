@@ -1,0 +1,392 @@
+---
+import Button from "./ui/Button.astro";
+
+
+// `max` sets how much of the segmented meter each value fills; `tint` its colour.
+const stats = [
+  { value: 7, max: 10, tint: "green", suffix: "+", label: "Years of experience" },
+  {
+    value: 6,
+    max: 8,
+    tint: "sky",
+    suffix: "",
+    label: "Core tech stacks",
+  },
+  { value: 5, max: 8, tint: "violet", suffix: "+", label: "React apps shipped early" },
+  { value: 35, max: 100, tint: "amber", suffix: "%", label: "Faster time-to-interactive" },
+];
+const SEGMENTS = 24;
+
+---
+
+<section id="top" class="hero relative isolate overflow-hidden" data-line data-hero>
+  <script is:inline>
+    // Arm the entrance before first paint so nothing flashes in its final
+    // state; the hero script disarms it. The timeout is a safety net in case
+    // the module never runs.
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("hero-armed");
+      setTimeout(() => document.documentElement.classList.remove("hero-armed"), 3000);
+    }
+  </script>
+
+  <div class="hero-spotlight pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-6 px-4 md:px-8 pt-10 md:pt-14 pb-10 md:pb-12">
+    <!-- Copy -->
+    <div class="lg:col-span-7 flex flex-col gap-5 relative z-10">
+      <h1
+        class="text-[2.75rem] leading-[1] sm:text-6xl lg:text-[4.5rem] tracking-[-0.04em] text-foreground-primary"
+      >
+        <span class="hero-word-mask"><span class="hero-word font-bold" data-hero-word>Prakash</span></span>{" "}
+        <span class="hero-word-mask hero-word-mask--serif"
+          ><span class="hero-word hero-serif text-foreground-muted" data-hero-word>Nayak</span></span
+        >
+      </h1>
+
+      <p class="text-[15px] md:text-base text-foreground-secondary leading-relaxed max-w-md" data-reveal>
+        Full-stack developer turning unclear business needs into fast, working products —
+        clean UX, SEO-friendly sites, <span class="whitespace-nowrap">e-commerce</span> and APIs.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-3 pt-1" data-reveal>
+        <span data-magnetic>
+          <Button variant="primary" size="md" href="mailto:erprakashnayak@gmail.com">
+            Get in touch
+          </Button>
+        </span>
+        <span data-magnetic>
+          <Button variant="secondary" size="md" href="#projects">View work</Button>
+        </span>
+      </div>
+    </div>
+
+    <!-- Globe -->
+    <div class="lg:col-span-5 relative flex items-center justify-center">
+      <div class="hero-globe relative w-full max-w-[340px] lg:max-w-[380px] lg:ml-auto aspect-square" data-hero-globe>
+        <span class="hero-corner top-0 left-0 border-l border-t" aria-hidden="true"></span>
+        <span class="hero-corner top-0 right-0 border-r border-t" aria-hidden="true"></span>
+        <span class="hero-corner bottom-0 left-0 border-l border-b" aria-hidden="true"></span>
+        <span class="hero-corner bottom-0 right-0 border-r border-b" aria-hidden="true"></span>
+
+        <div class="absolute inset-0" data-hero-canvas></div>
+
+        <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+          <span class="hero-label hero-label--home" data-lat="27.67" data-lon="85.32">Kathmandu</span>
+          <span class="hero-label" data-lat="-33.87" data-lon="151.21">Sydney</span>
+          <span class="hero-label" data-lat="12.97" data-lon="77.59">Bangalore</span>
+        </div>
+
+
+        <a
+          href="https://thedevelopment.com.au/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hero-now absolute bottom-3 left-3 right-3 sm:right-auto flex items-center gap-3 rounded-[12px] border border-border-secondary bg-background-primary/85 px-3 py-2.5 shadow-drop-md backdrop-blur-md transition-colors hover:border-border-tertiary outline-none focus-visible:ring-2 focus-visible:ring-brand-base"
+          data-reveal
+        >
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-brand-10 font-mono text-[11px] font-semibold text-brand-base">
+            TDA
+          </span>
+          <span class="flex flex-col">
+            <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-foreground-muted">
+              Currently · Dec 2024 — now
+            </span>
+            <span class="text-sm font-medium text-foreground-primary leading-snug">
+              UI/UX Developer, The Development Agency
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <dl class="grid grid-cols-2 md:grid-cols-4 border-t border-border-line">
+    {
+      stats.map((stat, i) => (
+        <div
+          class:list={[
+            "flex flex-col gap-1 px-4 md:px-8 py-5",
+            i % 2 === 1 && "border-l border-border-line",
+            i >= 2 && "border-t md:border-t-0 border-border-line",
+            i === 2 && "md:border-l",
+          ]}
+          data-reveal-stat
+          data-stat
+          data-value={stat.value}
+          data-max={stat.max}
+          data-tint={stat.tint}
+        >
+          <dt class="order-3 text-xs md:text-[13px] text-foreground-tertiary leading-snug">
+            {stat.label}
+          </dt>
+          <dd class="order-1 font-mono text-3xl md:text-4xl font-medium tracking-tight text-foreground-primary tabular-nums">
+            <span data-count>{stat.value}</span><span class="hero-tint">{stat.suffix}</span>
+          </dd>
+          <dd class="hero-meter order-2 my-1.5" aria-hidden="true">
+            {Array.from({ length: SEGMENTS }, (_, s) => (
+              <span
+                class:list={["hero-seg", s < Math.round((stat.value / stat.max) * SEGMENTS) && "is-on"]}
+              />
+            ))}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+</section>
+
+<style>
+  .hero-spotlight {
+    background: radial-gradient(
+      520px circle at var(--mx, 70%) var(--my, 30%),
+      var(--brand-8),
+      transparent 70%
+    );
+    transition: opacity 400ms var(--ease-out-soft);
+  }
+
+  h1 {
+    position: relative;
+  }
+
+  .hero-word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    /* Room for descenders inside the clip. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    white-space: pre;
+  }
+
+  /* Italic overhang would be clipped by the mask without the extra room. */
+  .hero-word-mask--serif {
+    padding-right: 0.12em;
+    margin-right: -0.12em;
+  }
+
+  .hero-serif {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-word {
+    display: inline-block;
+    will-change: transform;
+  }
+
+  .hero-meter {
+    display: flex;
+    gap: 3px;
+    height: 18px;
+    max-width: 200px;
+  }
+
+  [data-tint="green"] {
+    --tint: var(--brand-base);
+  }
+  [data-tint="sky"] {
+    --tint: #0284c7;
+  }
+  [data-tint="violet"] {
+    --tint: #7c3aed;
+  }
+  [data-tint="amber"] {
+    --tint: #d97706;
+  }
+  :global(.dark) [data-tint="sky"] {
+    --tint: #38bdf8;
+  }
+  :global(.dark) [data-tint="violet"] {
+    --tint: #a78bfa;
+  }
+  :global(.dark) [data-tint="amber"] {
+    --tint: #fbbf24;
+  }
+
+  .hero-tint {
+    color: var(--tint);
+  }
+
+  .hero-seg {
+    flex: 1;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--tint) 12%, transparent);
+    transition:
+      background-color 180ms var(--ease-out-soft),
+      box-shadow 180ms var(--ease-out-soft);
+  }
+
+  .hero-seg.is-on {
+    background: var(--tint);
+    box-shadow: 0 0 6px color-mix(in srgb, var(--tint) 35%, transparent);
+  }
+
+  .hero-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--border-tertiary);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    margin: -9px 0 0 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--foreground-tertiary);
+    background: color-mix(in srgb, var(--background-primary) 80%, transparent);
+    will-change: transform, opacity;
+  }
+
+  .hero-label--home {
+    color: var(--brand-base);
+    background: var(--brand-8);
+    box-shadow: inset 0 0 0 1px var(--brand-20);
+  }
+
+  :global(.hero-armed) [data-reveal],
+  :global(.hero-armed) [data-reveal-stat] {
+    opacity: 0;
+  }
+
+  :global(.hero-armed) [data-hero-word] {
+    transform: translateY(110%);
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { createGlobe } from "../lib/hero-globe";
+
+  const root = document.querySelector<HTMLElement>("[data-hero]");
+
+  if (root) {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const q = <T extends Element = HTMLElement>(sel: string) => Array.from(root.querySelectorAll<T>(sel));
+
+    // Globe.
+    const canvasHost = root.querySelector<HTMLElement>("[data-hero-canvas]");
+    let globe: ReturnType<typeof createGlobe> | null = null;
+    if (canvasHost) {
+      try {
+        globe = createGlobe(canvasHost, {
+          reducedMotion: reduced,
+          labels: q(".hero-label").map((el) => ({
+            el,
+            lat: Number(el.dataset.lat),
+            lon: Number(el.dataset.lon),
+          })),
+        });
+      } catch {
+        // No WebGL: the frame, labels-free card and copy still stand on their own.
+        globe = null;
+      }
+    }
+
+    // Count-up for the stat strip; the meter lights in step with the number.
+    const countUp = (delay: number) => {
+      q("[data-stat]").forEach((cell, i) => {
+        const target = Number(cell.dataset.value);
+        const max = Number(cell.dataset.max);
+        const counter = cell.querySelector<HTMLElement>("[data-count]");
+        const segments = Array.from(cell.querySelectorAll<HTMLElement>(".hero-seg"));
+        const state = { value: 0 };
+        let lit = -1;
+        const render = () => {
+          if (counter) counter.textContent = String(Math.round(state.value));
+          const next = Math.round((state.value / max) * segments.length);
+          if (next === lit) return;
+          lit = next;
+          segments.forEach((seg, s) => seg.classList.toggle("is-on", s < next));
+        };
+        render();
+        gsap.to(state, {
+          value: target,
+          duration: 1.6,
+          delay: delay + i * 0.08,
+          ease: "power3.out",
+          onUpdate: render,
+        });
+      });
+    };
+
+    // Entrance.
+    if (reduced) {
+      globe?.intro(0);
+    } else {
+      const words = q("[data-hero-word]");
+      const reveals = q("[data-reveal]");
+      const stats = q("[data-reveal-stat]");
+
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      tl.fromTo(
+        words,
+        { yPercent: 110, y: 0, rotate: 4 },
+        { yPercent: 0, y: 0, rotate: 0, duration: 1.2, stagger: 0.055 },
+        0.15,
+      )
+        .fromTo(
+          reveals,
+          { opacity: 0, y: 16, filter: "blur(8px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, stagger: 0.07 },
+          0.6,
+        )
+        .fromTo(
+          stats,
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.9, stagger: 0.06 },
+          0.9,
+        );
+
+      if (globe) tl.add(globe.intro(), 0.2);
+      // Inline styles from the tweens now hold the start state.
+      document.documentElement.classList.remove("hero-armed");
+    }
+    countUp(reduced ? 0 : 0.95);
+
+    if (!reduced && finePointer) {
+      // Spotlight follows the cursor across the hero.
+      root.addEventListener(
+        "pointermove",
+        (event) => {
+          const rect = root.getBoundingClientRect();
+          root.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+          root.style.setProperty("--my", `${event.clientY - rect.top}px`);
+        },
+        { passive: true },
+      );
+
+      // Magnetic CTAs.
+      q("[data-magnetic]").forEach((el) => {
+        el.style.display = "inline-block";
+        const toX = gsap.quickTo(el, "x", { duration: 0.5, ease: "power3.out" });
+        const toY = gsap.quickTo(el, "y", { duration: 0.5, ease: "power3.out" });
+        el.addEventListener("pointermove", (event) => {
+          const rect = el.getBoundingClientRect();
+          toX((event.clientX - rect.left - rect.width / 2) * 0.25);
+          toY((event.clientY - rect.top - rect.height / 2) * 0.3);
+        });
+        el.addEventListener("pointerleave", () => {
+          toX(0);
+          toY(0);
+        });
+      });
+    }
+  }
+</script>

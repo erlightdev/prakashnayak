@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
 import Button from "../components/ui/Button.astro";
 import Card from "../components/ui/Card.astro";
 import Badge from "../components/ui/Badge.astro";
@@ -34,34 +35,11 @@ const projects = [
 
 ---
 
-<Layout title="Prakash Nayak — Software Engineer">
-  <!-- Hero Section -->
-  <section class="py-16 md:py-24 px-4 md:px-8" data-line>
-    <div class="max-w-3xl flex flex-col gap-6">
-      <div class="flex items-center gap-2">
-        <Badge variant="brand">Available for Select Projects</Badge>
-        <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-base animate-pulse"></span>
-      </div>
-
-      <h1 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground-primary leading-[1.15]">
-        Building scalable infrastructure, developer tools, and refined web experiences.
-      </h1>
-
-      <p class="text-lg text-foreground-secondary leading-relaxed font-sans max-w-2xl">
-        I am Prakash Nayak, a software engineer specialized in distributed systems, web architectures,
-        and developer productivity. Focused on clarity, reliability, and precision.
-      </p>
-
-      <div class="flex flex-wrap items-center gap-3 pt-2">
-        <Button variant="primary" size="lg" href="#contact">
-          Get Started
-        </Button>
-        <Button variant="secondary" size="lg" href="#projects">
-          View Selected Work
-        </Button>
-      </div>
-    </div>
-  </section>
+<Layout
+  title="Prakash Nayak — Full-Stack Developer"
+  description="Full-stack developer in Patan, Lalitpur building fast, SEO-friendly products with WordPress, React, Laravel and Django."
+>
+  <Hero />
 
   <!-- Selected Projects -->
   <section id="projects" class="py-16 px-4 md:px-8" data-line>

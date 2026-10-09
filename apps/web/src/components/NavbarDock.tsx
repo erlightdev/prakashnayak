@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { House, Briefcase, Bookmark, Mail, User, Layers, AppWindow } from "lucide-react";
+import { Briefcase, User, Layers, AppWindow } from "lucide-react";
 import { Dock, DockCard, DockDivider } from "@/components/ui/dock";
 
 interface NavItem {
@@ -13,16 +13,6 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  {
-    id: "home",
-    label: "Home",
-    href: "#",
-    icon: (active) => (
-      <House
-        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
-      />
-    ),
-  },
   {
     id: "about",
     label: "About",
@@ -63,16 +53,6 @@ const navItems: NavItem[] = [
       />
     ),
   },
-  {
-    id: "bookmarks",
-    label: "Bookmarks",
-    href: "#",
-    icon: (active) => (
-      <Bookmark
-        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
-      />
-    ),
-  },
 ];
 
 const externalItems: NavItem[] = [
@@ -104,15 +84,6 @@ const externalItems: NavItem[] = [
       >
         <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
       </svg>
-    ),
-  },
-  {
-    id: "email",
-    label: "Email",
-    href: "mailto:contact@prakashnayak.com",
-    external: true,
-    icon: () => (
-      <Mail className="h-5 w-5 text-foreground-secondary group-hover:text-foreground-primary" />
     ),
   },
 ];
@@ -186,6 +157,22 @@ export default function NavbarDock() {
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto"
     >
       <Dock className="bg-background-primary/80 backdrop-blur-xl ring-1 ring-border-primary border-border-line/70">
+        <DockCard
+          id="logo"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            history.pushState(null, "", window.location.pathname);
+            setActive("home");
+          }}
+          tooltip="Home"
+        >
+          <div className="flex h-full w-full items-center justify-center rounded-[7px] bg-base-black font-mono text-sm font-semibold tracking-tight text-base-white">
+            pn<span className="text-[#18e299]">.</span>
+          </div>
+        </DockCard>
+
+        <DockDivider />
+
         {navItems.map((item) => {
           const isActive = active === item.id;
           return (

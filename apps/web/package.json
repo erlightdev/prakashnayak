@@ -18,11 +18,13 @@
     "astro": "^7.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
     "lucide-react": "^1.53.0",
     "motion": "^14.0.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwind-merge": "^3.7.0",
+    "three": "^0.186.1",
     "varlock": "catalog:",
     "zod": "catalog:"
   },
@@ -32,6 +34,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
+    "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.3.3",
     "typescript": "catalog:"
   }

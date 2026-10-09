@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwind-scrollbar";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -203,6 +204,15 @@
   --ease-in-out-smooth: var(--ease-in-out-smooth);
   --ease-out-strong: var(--ease-out-strong);
   --ease-in-out-strong: var(--ease-in-out-strong);
+}
+
+/* Thin themed scrollbars everywhere: page and any inner scroll container.
+   `html *` outranks the plugin's own `*` reset, which lands later in the base layer. */
+@layer base {
+  html,
+  html * {
+    @apply scrollbar-thin scrollbar-thumb-border-tertiary scrollbar-track-transparent hover:scrollbar-thumb-foreground-muted;
+  }
 }
 
 /* Base Body Styles */
