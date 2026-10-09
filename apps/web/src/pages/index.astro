@@ -3,39 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import ExperienceList from "../components/ExperienceList";
 import SkillsTabs from "../components/SkillsTabs";
+import EducationAccordion from "../components/EducationAccordion";
 import { mailto, whatsapp } from "../data/profile";
 import Button from "../components/ui/Button.astro";
-import Card from "../components/ui/Card.astro";
-import Badge from "../components/ui/Badge.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
-
-const projects = [
-  {
-    title: "High-Performance Distributed Cache",
-    description:
-      "A zero-allocation caching engine built with custom eviction strategies and sub-millisecond retrieval.",
-    tags: ["Rust", "Systems", "Networking"],
-    href: "#project-1",
-    metric: "0.18ms p99",
-  },
-  {
-    title: "Real-time Telemetry Pipeline",
-    description:
-      "Multi-tenant streaming data platform handling high-throughput event ingestion and windowed aggregations.",
-    tags: ["TypeScript", "ClickHouse", "Kafka"],
-    href: "#project-2",
-    metric: "120k req/s",
-  },
-  {
-    title: "Adaptive Type Generation Toolchain",
-    description:
-      "Schema-first compilation toolchain generating type-safe contracts and runtime validators.",
-    tags: ["Compiler", "AST", "TypeScript"],
-    href: "#project-3",
-    metric: "10x faster",
-  },
-];
-
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects } from "../data/projects";
 ---
 
 <Layout
@@ -63,52 +36,20 @@ const projects = [
     </div>
   </section>
 
-  <!-- Selected Projects -->
-  <section id="projects" class="py-16 px-4 md:px-8" data-line>
+  <!-- Education -->
+  <section id="education" class="px-4 md:px-8 py-12 md:py-16" data-line>
     <div class="flex flex-col gap-8">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <SectionHeader
-          title="Selected Projects"
-          subtitle="Recent technical systems, distributed engines, and developer software."
-        />
-        <span class="font-paper text-xs text-foreground-tertiary">
-          Archive 2024 — 2026
-        </span>
-      </div>
+      <SectionHeader title="Education" subtitle="Where the engineering started." />
+      <EducationAccordion client:visible />
+    </div>
+  </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {projects.map((project) => (
-          <Card
-            variant="feature"
-            padding="lg"
-            href={project.href}
-            ctaText="Explore architecture"
-            class="group flex flex-col justify-between"
-          >
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="font-mono text-xs text-brand-base font-medium">
-                  {project.metric}
-                </span>
-                <span class="font-paper text-xs text-foreground-muted">
-                  Production
-                </span>
-              </div>
-              <h3 class="text-lg font-medium text-foreground-primary tracking-tight">
-                {project.title}
-              </h3>
-              <p class="mt-2 text-sm text-foreground-secondary leading-relaxed">
-                {project.description}
-              </p>
-            </div>
-
-            <div class="mt-6 flex flex-wrap gap-1.5 pt-4 border-t border-border-primary">
-              {project.tags.map((tag) => (
-                <Badge variant="outline">{tag}</Badge>
-              ))}
-            </div>
-          </Card>
-        ))}
+  <!-- Selected Projects -->
+  <section id="projects" class="py-12 md:py-16 px-4 md:px-8" data-line>
+    <div class="flex flex-col gap-8">
+      <SectionHeader title="Selected Projects" subtitle="Live products and sites I've built." />
+      <div class="projects-grid grid grid-cols-1 gap-4 md:grid-cols-2">
+        {projects.map((project) => <ProjectCard project={project} />)}
       </div>
     </div>
   </section>

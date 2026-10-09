@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Briefcase, User, Layers, AppWindow } from "lucide-react";
+import { AppWindow, Briefcase, GraduationCap, Layers } from "lucide-react";
 import { Dock, DockCard, DockDivider } from "@/components/ui/dock";
 import { profile } from "@/data/profile";
 
@@ -13,23 +13,34 @@ interface NavItem {
   icon: (active: boolean) => React.ReactNode;
 }
 
+// Mirrors the homepage sections, top to bottom.
 const navItems: NavItem[] = [
   {
-    id: "about",
-    label: "About",
-    href: "#about",
+    id: "experience",
+    label: "Experience",
+    href: "#experience",
     icon: (active) => (
-      <User
+      <Briefcase
         className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
       />
     ),
   },
   {
-    id: "services",
-    label: "Services",
-    href: "#services",
+    id: "skills",
+    label: "Skills",
+    href: "#skills",
     icon: (active) => (
       <Layers
+        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
+      />
+    ),
+  },
+  {
+    id: "education",
+    label: "Education",
+    href: "#education",
+    icon: (active) => (
+      <GraduationCap
         className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
       />
     ),
@@ -38,16 +49,6 @@ const navItems: NavItem[] = [
     id: "projects",
     label: "Projects",
     href: "#projects",
-    icon: (active) => (
-      <Briefcase
-        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
-      />
-    ),
-  },
-  {
-    id: "showcase",
-    label: "Showcase",
-    href: "#showcase",
     icon: (active) => (
       <AppWindow
         className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
@@ -93,13 +94,7 @@ export default function NavbarDock() {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const sections = [
-      { id: "about", el: document.getElementById("about") },
-      { id: "services", el: document.getElementById("services") },
-      { id: "projects", el: document.getElementById("projects") },
-      { id: "showcase", el: document.getElementById("showcase") },
-      { id: "contact", el: document.getElementById("contact") },
-    ];
+    const sections = navItems.map((item) => ({ id: item.id, el: document.getElementById(item.id) }));
 
     const handleScroll = () => {
       const scrollY = window.scrollY;

@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "start": "node apps/web/dist/server/entry.mjs",
     "check-types": "turbo run check-types",
     "dev:web": "turbo run dev -F web --",
     "env:generate": "varlock codegen --path ./apps/web/",
@@ -34,5 +35,8 @@
     "typescript": "catalog:",
     "varlock": "catalog:"
   },
-  "packageManager": "bun@1.4.0"
+  "packageManager": "bun@1.4.0",
+  "engines": {
+    "node": ">=22.12"
+  }
 }

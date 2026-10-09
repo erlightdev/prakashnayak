@@ -1,0 +1,127 @@
+---
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const MAX_TAGS = 3;
+
+const { project } = Astro.props;
+const [deep, mid, light] = project.accent;
+const shownTags = project.stack.slice(0, MAX_TAGS);
+const hiddenTags = project.stack.length - shownTags.length;
+---
+
+<a
+  href={project.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`${project.name} — open live site`}
+  class="project-card group flex flex-col gap-3 rounded-[20px] bg-background-primary p-1.5 pb-4 ring-1 ring-inset ring-border-line outline-none focus-visible:ring-2 focus-visible:ring-brand-base"
+  style={`--deep:${deep};--mid:${mid};--light:${light}`}
+>
+  <div class="project-stage relative aspect-video overflow-hidden rounded-[15px] bg-background-secondary">
+    <span class="project-waves absolute inset-0" aria-hidden="true"></span>
+    <img
+      src={project.image}
+      alt={`${project.name} homepage`}
+      width="1600"
+      height="900"
+      loading="lazy"
+      decoding="async"
+      class="project-shot absolute inset-x-[8%] -bottom-[6%] w-[84%] rounded-t-[8px] ring-1 ring-black/10 shadow-feature-card"
+    />
+  </div>
+
+  <div class="flex flex-col gap-2.5 px-2.5">
+    <div class="flex items-center justify-between gap-3">
+      <h3 class="truncate text-base font-medium tracking-tight text-foreground-primary">{project.name}</h3>
+      <span
+        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-foreground-secondary ring-1 ring-inset ring-border-secondary transition-all duration-300 group-hover:bg-foreground-primary group-hover:text-background-primary group-hover:ring-transparent"
+        aria-hidden="true"
+      >
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17 17 7M8 7h9v9"></path>
+        </svg>
+      </span>
+    </div>
+
+    <p class="line-clamp-2 text-sm leading-relaxed text-foreground-secondary" title={project.description}>
+      {project.description}
+    </p>
+
+    <ul class="flex flex-wrap gap-1.5" aria-label="Stack">
+      {
+        shownTags.map((tech) => (
+          <li class="rounded-full px-2 py-0.5 text-[11px] text-foreground-tertiary ring-1 ring-inset ring-border-line">
+            {tech}
+          </li>
+        ))
+      }
+      {
+        hiddenTags > 0 && (
+          <li
+            class="rounded-full px-2 py-0.5 text-[11px] text-foreground-tertiary ring-1 ring-inset ring-border-line"
+            title={project.stack.slice(MAX_TAGS).join(", ")}
+          >
+            +{hiddenTags}
+          </li>
+        )
+      }
+    </ul>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    transition:
+      opacity 300ms var(--ease-out-soft),
+      filter 300ms var(--ease-out-soft),
+      box-shadow 300ms var(--ease-out-soft);
+  }
+
+  /* Concentric brand-tone bands that wash in behind the screenshot on hover. */
+  .project-waves {
+    opacity: 0;
+    background:
+      repeating-radial-gradient(
+        circle at 0% 0%,
+        var(--deep) 0 34px,
+        var(--mid) 34px 68px,
+        var(--light) 68px 96px,
+        var(--mid) 96px 130px
+      );
+    transition: opacity 400ms var(--ease-out-soft);
+  }
+
+  .project-shot {
+    transition: transform 500ms var(--ease-out-soft);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .project-card:hover {
+      box-shadow: var(--shadow-feature-card);
+    }
+
+    .project-card:hover .project-waves {
+      opacity: 1;
+    }
+
+    .project-card:hover .project-shot {
+      transform: translateY(-4%);
+    }
+
+    /* Spotlight: the other cards step back while one is hovered. */
+    :global(.projects-grid:has(.project-card:hover)) .project-card:not(:hover) {
+      opacity: 0.5;
+      filter: grayscale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-shot {
+      transition: none;
+    }
+  }
+</style>
