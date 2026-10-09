@@ -5,7 +5,7 @@ import { NotFoundTerminal } from "../components/motion/not-found/terminal";
 const attemptedPath = Astro.url.pathname;
 ---
 
-<Layout title="404 — Page Not Found | Prakash Nayak">
+<Layout title="404 — Page Not Found | Prakash Nayak" noindex>
   <main class="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 md:px-8">
     <NotFoundTerminal
       client:load

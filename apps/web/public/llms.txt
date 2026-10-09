@@ -1,0 +1,25 @@
+# Prakash Nayak
+
+> Full-stack developer and founder of Hiver Technology, based in Lalitpur, Nepal. Builds fast, SEO-friendly products with WordPress, React, Next.js, Laravel and Django.
+
+## About
+
+- 7+ years shipping production web software
+- Founder & CEO, Hiver Technology (2020 – present): leads a team of 5 across web, e-commerce, SaaS and marketing
+- WordPress & UI/UX Developer, The Development Agency (Dec 2024 – present)
+- B.E. Computer Science & Engineering, BMS Institute of Technology and Management (2014 – 2018)
+
+## Selected work
+
+- [PopSocialIQ](https://popsocialiq.com/): social media analytics; led the frontend
+- [OpenVoice](https://openvoice.studio/): AI voice cloning and text-to-speech
+- [Selim Solutions](https://selim.solutions/): managed security (SOC) company site
+- [Abstract Infosys](https://abstractinfosys.com/): digital marketing agency site
+- [Jeep Tour Nepal](https://jeeptournepal.com/): custom WordPress theme for a travel company
+- [Insight Technology](https://insighttechintl.com/): cybersecurity and cloud company site
+
+## Contact
+
+- Website: https://prakashnayak.com.np/
+- Email: erprakashnayak@gmail.com
+- LinkedIn: https://dub.sh/linkedin-pn
