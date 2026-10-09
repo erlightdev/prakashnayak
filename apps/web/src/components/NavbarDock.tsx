@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { House, Briefcase, Bookmark, Mail } from "lucide-react";
+import { House, Briefcase, Bookmark, Mail, User, Layers, AppWindow } from "lucide-react";
 import { Dock, DockCard, DockDivider } from "@/components/ui/dock";
 
 interface NavItem {
@@ -24,11 +24,41 @@ const navItems: NavItem[] = [
     ),
   },
   {
+    id: "about",
+    label: "About",
+    href: "#about",
+    icon: (active) => (
+      <User
+        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
+      />
+    ),
+  },
+  {
+    id: "services",
+    label: "Services",
+    href: "#services",
+    icon: (active) => (
+      <Layers
+        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
+      />
+    ),
+  },
+  {
     id: "projects",
     label: "Projects",
     href: "#projects",
     icon: (active) => (
       <Briefcase
+        className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
+      />
+    ),
+  },
+  {
+    id: "showcase",
+    label: "Showcase",
+    href: "#showcase",
+    icon: (active) => (
+      <AppWindow
         className={`h-5 w-5 ${active ? "text-brand-base" : "text-foreground-secondary group-hover:text-foreground-primary"}`}
       />
     ),
@@ -92,7 +122,10 @@ export default function NavbarDock() {
 
   useEffect(() => {
     const sections = [
+      { id: "about", el: document.getElementById("about") },
+      { id: "services", el: document.getElementById("services") },
       { id: "projects", el: document.getElementById("projects") },
+      { id: "showcase", el: document.getElementById("showcase") },
       { id: "contact", el: document.getElementById("contact") },
     ];
 
