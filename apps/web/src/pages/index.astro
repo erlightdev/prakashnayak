@@ -32,12 +32,6 @@ const projects = [
   },
 ];
 
-const designTokens = [
-  { name: "Brand Base", class: "bg-brand-base text-base-white", label: "Dynamic hue" },
-  { name: "Brand 8%", class: "bg-brand-8 text-brand-base ring-1 ring-brand-20", label: "Subtle tint" },
-  { name: "Surface Sec", class: "bg-background-secondary text-foreground-primary ring-1 ring-border-secondary", label: "Raised" },
-  { name: "Surface Tert", class: "bg-background-tertiary text-foreground-secondary ring-1 ring-border-line", label: "Inset fill" },
-];
 ---
 
 <Layout title="Prakash Nayak — Software Engineer">
@@ -65,26 +59,6 @@ const designTokens = [
         <Button variant="secondary" size="lg" href="#projects">
           View Selected Work
         </Button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive Token & Elevation Showcase -->
-  <section class="py-12 px-4 md:px-8 bg-background-secondary/40" data-line>
-    <div class="flex flex-col gap-6">
-      <SectionHeader
-        title="Design System Foundations"
-        subtitle="Theme-resolved color tokens, layered drop shadows, and responsive grid alignment."
-        badge="System Tokens"
-      />
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {designTokens.map((token) => (
-          <div class={`rounded-[6px] p-4 flex flex-col justify-between h-28 shadow-drop-sm ${token.class}`}>
-            <span class="font-paper text-xs uppercase tracking-wider">{token.label}</span>
-            <span class="font-mono text-sm font-medium">{token.name}</span>
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -139,60 +113,9 @@ const designTokens = [
     </div>
   </section>
 
-  <!-- Technical Depth & Architecture Callout -->
-  <section class="py-16 px-4 md:px-8 bg-background-secondary" data-line>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      <div>
-        <Badge variant="brand" class="mb-3">Architectural Philosophy</Badge>
-        <h2 class="section-heading text-foreground-primary">
-          Engineered for deterministic performance and clarity.
-        </h2>
-        <p class="mt-4 text-foreground-secondary leading-relaxed">
-          Every layer of the system is carefully decoupled. From tokenized design primitives
-          and zero-FOUC theme hydration to type-safe environment schemas and responsive layout
-          rails.
-        </p>
 
-        <ul class="mt-6 space-y-3 text-sm text-foreground-secondary font-mono">
-          <li class="flex items-center gap-2">
-            <span class="text-brand-base">✓</span> Class-based dynamic theme resolution
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="text-brand-base">✓</span> Inset rings blending with diffuse drop shadows
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="text-brand-base">✓</span> Accessible focus rings with 2px brand outline
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="text-brand-base">✓</span> Strict accessibility & prefers-reduced-motion honor
-          </li>
-        </ul>
-      </div>
-
-      <div class="rounded-[10px] bg-background-primary p-6 ring-1 ring-inset ring-border-secondary shadow-feature-card">
-        <div class="flex items-center justify-between border-b border-border-line pb-3 mb-4">
-          <div class="flex items-center gap-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-border-tertiary"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-border-tertiary"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-border-tertiary"></span>
-          </div>
-          <span class="font-mono text-xs text-foreground-muted">system-spec.ts</span>
-        </div>
-        <pre class="overflow-x-auto font-mono text-xs text-foreground-secondary leading-relaxed"><code><span class="text-brand-base">export const</span> system = &#123;
-  theme: <span class="text-brand-vivid">"dynamic-tokenized"</span>,
-  grid: &#123; columns: [4, 12, 24], maxWidth: <span class="text-foreground-primary">1088</span> &#125;,
-  easing: <span class="text-brand-vivid">"cubic-bezier(.22, 1, .36, 1)"</span>,
-  accessibility: &#123;
-    motionReduction: <span class="text-brand-base">true</span>,
-    stretchedLinks: <span class="text-brand-base">true</span>,
-  &#125;,
-&#125;;</code></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact & Footer -->
-  <footer id="contact" class="py-16 px-4 md:px-8">
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 px-4 md:px-8">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
       <div>
         <h3 class="text-xl font-medium text-foreground-primary tracking-tight">
@@ -222,10 +145,5 @@ const designTokens = [
         </Button>
       </div>
     </div>
-
-    <div class="mt-12 pt-6 border-t border-border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-paper text-foreground-muted">
-      <span>© 2026 Prakash Nayak. All rights reserved.</span>
-      <span>Tokenized Design System — 24-Column Grid</span>
-    </div>
-  </footer>
+  </section>
 </Layout>

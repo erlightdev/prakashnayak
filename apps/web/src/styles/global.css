@@ -178,6 +178,12 @@
   --color-brand-btn-shadow: var(--brand-button-shadow);
   --color-brand-btn-hover: var(--brand-button-hover);
 
+  --color-border: var(--border-secondary);
+  --color-card: var(--background-secondary);
+  --color-muted: var(--background-tertiary);
+  --color-foreground: var(--foreground-primary);
+  --color-ring: var(--brand-base);
+
   --color-error: var(--error);
 
   --font-sans: var(--font-sans);
