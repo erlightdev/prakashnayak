@@ -1,9 +1,11 @@
 export interface Skill {
   name: string;
-  /** File in /public/logos/skills (Simple Icons, CC0). Omitted when no logo exists. */
+  /** File in /public/logos/skills (Simple Icons, or theSVG when Simple Icons lacks it). */
   icon?: string;
   /** Brand colour. Omitted for black/white marks, which follow the text colour instead. */
   color?: string;
+  /** Full-colour SVG (from theSVG) shown as-is instead of masked. */
+  multicolor?: boolean;
 }
 
 export interface SkillGroup {
@@ -92,7 +94,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "oRPC" },
       { name: "Better Auth", icon: i("betterauth"), color: BRAND.betterauth },
       { name: "Stripe", icon: i("stripe"), color: BRAND.stripe },
-      { name: "Dodo Payments" },
+      { name: "Dodo Payments", icon: i("dodo-payments"), multicolor: true },
     ],
   },
   {
@@ -136,13 +138,15 @@ export const skillGroups: SkillGroup[] = [
       { name: "Figma", icon: i("figma"), color: BRAND.figma },
       { name: "Canva", icon: i("canva"), color: BRAND.canva },
       { name: "Biome", icon: i("biome"), color: BRAND.biome },
+      { name: "VS Code", icon: i("visual-studio-code"), multicolor: true },
+      { name: "Antigravity", icon: i("google-antigravity"), multicolor: true },
       { name: "Claude", icon: i("claude"), color: BRAND.claude },
       { name: "Codex", icon: i("openai"), color: BRAND.openai },
       { name: "Gemini", icon: i("googlegemini"), color: BRAND.googlegemini },
       { name: "MCP", icon: i("modelcontextprotocol"), color: BRAND.modelcontextprotocol },
       { name: "Premiere Pro", icon: i("adobepremierepro"), color: BRAND.adobepremierepro },
-      { name: "CapCut" },
-      { name: "Remotion" },
+      { name: "CapCut", icon: i("capcut") },
+      { name: "Remotion", icon: i("remotion"), multicolor: true },
     ],
   },
 ];

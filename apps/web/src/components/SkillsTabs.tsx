@@ -6,7 +6,16 @@ import { skillGroups, type Skill } from "@/data/skills";
 function SkillChip({ skill }: { skill: Skill }) {
   return (
     <li className="group inline-flex items-center gap-2 rounded-[10px] px-2.5 py-1.5 text-sm text-foreground-secondary ring-1 ring-inset ring-border-line transition-colors hover:bg-background-secondary hover:text-foreground-primary">
-      {skill.icon ? (
+      {skill.icon && skill.multicolor ? (
+        <img
+          src={skill.icon}
+          alt=""
+          width={16}
+          height={16}
+          loading="lazy"
+          className="h-4 w-4 shrink-0"
+        />
+      ) : skill.icon ? (
         // Masked so the mark takes its brand colour, or the text colour when it has none.
         <span
           aria-hidden="true"
