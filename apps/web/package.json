@@ -25,18 +25,18 @@
     "react-dom": "^19.3.0",
     "tailwind-merge": "^3.7.0",
     "three": "^0.186.1",
-    "varlock": "catalog:",
-    "zod": "catalog:"
+    "varlock": "1.18.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@prakashnayak/config": "workspace:*",
+    "@prakashnayak/config": "*",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.186.0",
     "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.3.3",
-    "typescript": "catalog:"
+    "typescript": "^6.0.3"
   }
 }

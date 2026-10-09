@@ -1,17 +1,10 @@
 {
   "name": "prakashnayak",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ],
-    "catalog": {
-      "zod": "^4.5.4",
-      "typescript": "^6.0.3",
-      "varlock": "1.18.0"
-    }
-  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
     "dev": "turbo run dev",
@@ -24,16 +17,16 @@
     "check": "oxlint && oxfmt --write"
   },
   "dependencies": {
-    "zod": "catalog:"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
-    "@prakashnayak/config": "workspace:*",
+    "@prakashnayak/config": "*",
     "@types/node": "^26.4.1",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
     "turbo": "^2.10.12",
-    "typescript": "catalog:",
-    "varlock": "catalog:"
+    "typescript": "^6.0.3",
+    "varlock": "1.18.0"
   },
   "packageManager": "bun@1.4.0",
   "engines": {
