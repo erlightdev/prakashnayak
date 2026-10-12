@@ -1,5 +1,5 @@
 // @ts-check
-import { copyFile } from "node:fs/promises";
+import { rename, rm } from "node:fs/promises";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
@@ -7,15 +7,16 @@ import varlockAstroIntegration from "@varlock/astro-integration";
 import { defineConfig } from "astro/config";
 
 /**
- * `@astrojs/sitemap` writes an index as `sitemap-index.xml`. Keep the
- * conventional `sitemap.xml` URL available too, without maintaining a second
- * sitemap by hand.
+ * `@astrojs/sitemap` writes an index and a child sitemap by default. This
+ * portfolio is well below the 50,000-URL sitemap limit, so publish its single
+ * generated child as the conventional `/sitemap.xml` instead.
  */
 const sitemapAlias = {
   name: "sitemap-alias",
   hooks: {
     "astro:build:done": async ({ dir }) => {
-      await copyFile(new URL("sitemap-index.xml", dir), new URL("sitemap.xml", dir));
+      await rename(new URL("sitemap-0.xml", dir), new URL("sitemap.xml", dir));
+      await rm(new URL("sitemap-index.xml", dir));
     },
   },
 };
@@ -29,6 +30,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.endsWith("/404/"),
       changefreq: "monthly",
+      entryLimit: 50_000,
       lastmod: new Date(),
     }),
     sitemapAlias,
